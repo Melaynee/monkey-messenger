@@ -2,8 +2,8 @@ import React from "react";
 
 type Props = {};
 
-const AuthPage = (props: Props) => {
-  return <div>AuthPage</div>;
+const ChatPage = (props: Props) => {
+  return <div>ChatPage</div>;
 };
 
-export default AuthPage;
+export default ChatPage;
