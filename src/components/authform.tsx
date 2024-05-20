@@ -6,6 +6,7 @@ import Input from "./inputs/input";
 import Button from "./button";
 import AuthSocialButton from "./authsocialbutton";
 import { BsGithub, BsGoogle } from "react-icons/bs";
+import axios from "axios";
 
 type Props = {};
 
@@ -39,11 +40,11 @@ const AuthForm = (props: Props) => {
     setIsLoading(true);
 
     if (variant === "REGISTER") {
-      // axios call here
+      axios.post("/api/register", data);
     }
 
     if (variant === "LOGIN") {
-      // Nextauth call here
+      axios.post("/api/auth", data);
     }
   };
 
