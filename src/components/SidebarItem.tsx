@@ -1,6 +1,6 @@
 import React from "react";
-import AvatarComponent from "./avatar";
-import UserItem from "./user-item";
+import AvatarComponent from "./Avatar";
+import UserItem from "./UserItem";
 import Link from "next/link";
 
 type Props = {};

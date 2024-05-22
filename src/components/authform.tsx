@@ -3,10 +3,10 @@
 import React from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Input from "./inputs/input";
-import Button from "./button";
-import AuthSocialButton from "./authsocialbutton";
 import { BsGithub, BsGoogle } from "react-icons/bs";
 import axios from "axios";
+import Button from "./button";
+import AuthSocialButton from "./authsocialbutton";
 
 type Props = {};
 

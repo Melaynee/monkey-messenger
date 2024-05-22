@@ -1,6 +1,6 @@
-import BurgerComponent from "@/components/burger";
-import Searchbar from "@/components/searchbar";
-import ItemComponent from "@/components/sidebar-item";
+import BurgerComponent from "@/components/Burger";
+import Searchbar from "@/components/Searchbar";
+import ItemComponent from "@/components/SidebarItem";
 import React from "react";
 
 type Props = {};

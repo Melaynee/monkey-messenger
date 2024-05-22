@@ -1,9 +1,9 @@
 "use client";
 
-import AuthButton from "@/components/authbutton";
-import AuthForm from "@/components/authform";
 import Image from "next/image";
 import React from "react";
+import AuthForm from "../authform";
+import AuthButton from "../authbutton";
 
 type Props = {};
 
