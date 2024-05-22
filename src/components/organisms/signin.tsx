@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import React from "react";
-import AuthForm from "../authform";
-import AuthButton from "../authbutton";
+import AuthForm from "../AuthForm";
+import AuthButton from "../AuthButton";
 
 type Props = {};
 
