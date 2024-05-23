@@ -44,6 +44,7 @@ const AuthForm = (props: Props) => {
     if (variant === "REGISTER") {
       axios
         .post("/api/register", data)
+        .then(() => signIn("credentials", data))
         .then(() => toast.success("Register success"))
         .catch((error) => {
           console.log(error);
@@ -60,9 +61,6 @@ const AuthForm = (props: Props) => {
         .then((callback) => {
           if (callback?.error) {
             toast.error("Invalid credentials");
-          }
-          if (callback?.ok && !callback?.error) {
-            toast.success("Logged in");
           }
         })
         .finally(() => setIsLoading(false));

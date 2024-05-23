@@ -1,14 +1,26 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import AuthForm from "../AuthForm";
 import AuthButton from "../AuthButton";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 type Props = {};
 
 const Authorization = (props: Props) => {
   const [open, setOpen] = React.useState(false);
+  const session = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      toast.success("Logged in");
+      router.push("/users");
+    }
+  }, [session.status, router]);
   return (
     <div
       className="flex flex-col items-center  mx-auto transition-all duration-700 ease-in-out"

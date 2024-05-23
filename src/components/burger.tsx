@@ -7,6 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Switch } from "./ui/switch";
+import { signOut } from "next-auth/react";
 
 type Props = {};
 
@@ -28,6 +29,10 @@ const BurgerComponent = (props: Props) => {
           <DropdownMenuItem className="flex gap-2">
             <label htmlFor="toggle-dark-mode">Night Mode</label>
             <Switch id="toggle-dark-mode" />
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <button onClick={() => signOut()}>Logout</button>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
