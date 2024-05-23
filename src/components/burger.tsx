@@ -6,12 +6,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Switch } from "./ui/switch";
-import { signOut } from "next-auth/react";
+import useRoutes from "@/hooks/useRoutes";
+import Link from "next/link";
+import { User } from "@prisma/client";
+import AvatarComponent from "./Avatar";
 
-type Props = {};
+type Props = { currentUser: User };
 
 const BurgerComponent = (props: Props) => {
+  const routes = useRoutes();
+
   return (
     <div className="">
       <DropdownMenu>
@@ -21,18 +25,27 @@ const BurgerComponent = (props: Props) => {
           <div className="w-6 h-1 rounded-full bg-dark m-1 "></div>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem>Saved Messages</DropdownMenuItem>
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Contacts</DropdownMenuItem>
-          <DropdownMenuItem>Settings</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem className="flex gap-2">
-            <label htmlFor="toggle-dark-mode">Night Mode</label>
-            <Switch id="toggle-dark-mode" />
-          </DropdownMenuItem>
+          {routes.map((route) => (
+            <DropdownMenuItem key={route.label}>
+              <Link
+                className="flex gap-2 items-center cursor-pointer"
+                href={route.href}
+                onClick={route?.onClick}
+              >
+                {<route.icon />}
+                {route.label}
+              </Link>
+            </DropdownMenuItem>
+          ))}
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <button onClick={() => signOut()}>Logout</button>
+            <Link
+              className="flex gap-2 cursor-pointer items-center"
+              href="/api/auth/signout"
+            >
+              <AvatarComponent size={20} user={props.currentUser} />
+              {props.currentUser?.name}
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
