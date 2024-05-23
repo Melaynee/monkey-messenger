@@ -1,19 +1,20 @@
+"use client";
 import BurgerComponent from "@/components/Burger";
 import Searchbar from "@/components/Searchbar";
 import ItemComponent from "@/components/SidebarItem";
 import React from "react";
+import { User } from "@prisma/client";
 
-type Props = {};
+type Props = { currentUser: User };
 
 const Sidebar = (props: Props) => {
   return (
-    <div className="bg-[#fff]  h-full min-h-screen py-4">
+    <div className="bg-[#fff] h-full min-h-screen py-4">
       <div className="flex items-center justify-around mb-4">
-        <BurgerComponent />
+        <BurgerComponent currentUser={props.currentUser} />
         <Searchbar />
       </div>
       <div className="flex flex-col justify-around items-start">
-        <ItemComponent />
         <ItemComponent />
         <ItemComponent />
         <ItemComponent />
