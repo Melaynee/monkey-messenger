@@ -1,16 +1,30 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    appDir: true,
     swcPlugins: [["next-superjson-plugin", {}]],
   },
   images: {
-    domains: [
-      "lh3.googleusercontent.com",
-      "res.cloudinary.com",
-      "avatars.githubusercontent.com",
-      "avatars.dicebear.com",
-      "www.gravatar.com",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.dicebear.com",
+      },
+      {
+        protocol: "https",
+        hostname: "www.gravatar.com",
+      },
     ],
   },
 };
