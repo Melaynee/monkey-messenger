@@ -14,28 +14,25 @@ export default async function UsersLayout({
 }>) {
   const currentUser = await getCurrentUser();
   return (
-    <main>
-      <div className="hidden lg:block">
+    <main className="h-screen w-full overflow-hidden relative">
+      <div className="h-full w-full">
         <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel minSize={15} defaultSize={25} maxSize={50}>
+          <ResizablePanel
+            className="hidden lg:block"
+            minSize={15}
+            defaultSize={25}
+            maxSize={50}
+          >
             <Sidebar currentUser={currentUser!} />
           </ResizablePanel>
-          <ResizableHandle />
+          <ResizableHandle className="hidden lg:block" />
           <ResizablePanel minSize={50} defaultSize={75} maxSize={100}>
             {children}
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>
-      <div className="block lg:hidden h-screen">
-        <ResizablePanelGroup direction="vertical">
-          <ResizablePanel minSize={50} defaultSize={75} maxSize={100}>
-            {children}
-          </ResizablePanel>
-          <ResizableHandle />
-          <ResizablePanel minSize={0} defaultSize={10} maxSize={15}>
-            <Footer currentUser={currentUser!} />
-          </ResizablePanel>
-        </ResizablePanelGroup>
+      <div className="absolute bottom-0 left-0 right-0">
+        <Footer currentUser={currentUser!} />
       </div>
     </main>
   );

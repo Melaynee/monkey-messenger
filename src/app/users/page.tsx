@@ -6,7 +6,7 @@ type Props = {};
 
 const Users = (props: Props) => {
   return (
-    <div className="h-screen">
+    <div className="h-full">
       <WelcomeComponent />
     </div>
   );

@@ -10,7 +10,7 @@ type Props = { currentUser: User };
 const Footer = (props: Props) => {
   const routes = useRoutes();
   return (
-    <div className="bg-[#fff] p-4 ">
+    <div className="bg-[#fff] p-4 block lg:hidden ">
       <div className="flex justify-around items-center w-1/2 mx-auto">
         {routes.map((route) => (
           <Link

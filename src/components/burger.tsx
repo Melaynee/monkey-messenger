@@ -19,12 +19,22 @@ const BurgerComponent = (props: Props) => {
   return (
     <div className="">
       <DropdownMenu>
-        <DropdownMenuTrigger className="focus:outline-none">
-          <div className="w-6 h-1 rounded-full bg-dark m-1 "></div>
-          <div className="w-6 h-1 rounded-full bg-dark m-1 "></div>
-          <div className="w-6 h-1 rounded-full bg-dark m-1 "></div>
+        <DropdownMenuTrigger className="focus:outline-none flex items-center">
+          <div className="flex flex-col gap-1">
+            <div className="w-6 h-1 rounded-full bg-dark  "></div>
+            <div className="w-6 h-1 rounded-full bg-dark  "></div>
+            <div className="w-6 h-1 rounded-full bg-dark  "></div>
+          </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
+          <DropdownMenuItem>
+            <Link className="flex gap-2 cursor-pointer items-center" href="/#">
+              <AvatarComponent size={20} user={props.currentUser} />
+              {props.currentUser?.name}
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+
           {routes.map((route) => (
             <DropdownMenuItem key={route.label}>
               <Link
@@ -37,16 +47,6 @@ const BurgerComponent = (props: Props) => {
               </Link>
             </DropdownMenuItem>
           ))}
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <Link
-              className="flex gap-2 cursor-pointer items-center"
-              href="/api/auth/signout"
-            >
-              <AvatarComponent size={20} user={props.currentUser} />
-              {props.currentUser?.name}
-            </Link>
-          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

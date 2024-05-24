@@ -14,6 +14,7 @@ const Sidebar = (props: Props) => {
         <BurgerComponent currentUser={props.currentUser} />
         <Searchbar />
       </div>
+
       <div className="flex flex-col justify-around items-start">
         <ItemComponent />
         <ItemComponent />
