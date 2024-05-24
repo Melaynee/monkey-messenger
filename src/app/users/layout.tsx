@@ -6,6 +6,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { Suspense } from "react";
 
 export default async function UsersLayout({
   children,
@@ -23,7 +24,9 @@ export default async function UsersLayout({
             defaultSize={25}
             maxSize={50}
           >
-            <Sidebar currentUser={currentUser!} />
+            <Suspense fallback={null}>
+              <Sidebar currentUser={currentUser!} />
+            </Suspense>
           </ResizablePanel>
           <ResizableHandle className="hidden lg:block" />
           <ResizablePanel minSize={50} defaultSize={75} maxSize={100}>

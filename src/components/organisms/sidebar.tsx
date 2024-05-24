@@ -1,13 +1,15 @@
-"use client";
 import BurgerComponent from "@/components/Burger";
 import Searchbar from "@/components/Searchbar";
-import ItemComponent from "@/components/SidebarItem";
 import React from "react";
 import { User } from "@prisma/client";
+import UserList from "../UserList";
+import getUsers from "@/actions/getUsers";
 
 type Props = { currentUser: User };
 
-const Sidebar = (props: Props) => {
+const Sidebar = async (props: Props) => {
+  const users = await getUsers();
+
   return (
     <div className="bg-[#fff] h-full min-h-screen py-4">
       <div className="flex items-center justify-around mb-4">
@@ -16,9 +18,7 @@ const Sidebar = (props: Props) => {
       </div>
 
       <div className="flex flex-col justify-around items-start">
-        <ItemComponent />
-        <ItemComponent />
-        <ItemComponent />
+        <UserList users={users} />
       </div>
     </div>
   );
