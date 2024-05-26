@@ -19,7 +19,7 @@ const UserList = async (props: Props) => {
             className="flex gap-4 p-4 hover:bg-hover/10 transition-all duration-300"
           >
             <AvatarComponent user={user} />
-            <UserItem user={user} />
+            <UserItem user={user} showMessage />
           </Link>
         ))
       }
