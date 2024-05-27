@@ -24,7 +24,7 @@ const AvatarComponent: React.FC<Props> = ({ user, size }) => {
         )}
       />
       <div className="absolute right-0 bottom-0">
-        <OnlineIcon />
+        <OnlineIcon size={imgSize} />
       </div>
     </div>
   );

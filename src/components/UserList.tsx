@@ -1,28 +1,33 @@
-import React from "react";
-import AvatarComponent from "./Avatar";
-import UserItem from "./UserItem";
-import Link from "next/link";
+"use client";
+import React, { useCallback, useState } from "react";
 import { User } from "@prisma/client";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import UserBox from "./UserBox";
 
 type Props = { users: User[] };
 
-const UserList = async (props: Props) => {
-  console.log(props.users);
+const UserList = (props: Props) => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const handleClick = useCallback(
+    (user: User) => {
+      setIsLoading(true);
+      axios
+        .post("/api/chats", {
+          userId: user.id,
+        })
+        .then((res) => router.push(`/chat/${res.data.id}`))
+        .finally(() => setIsLoading(false));
+    },
+    [router]
+  );
   return (
     <div className="my-1 w-full">
-      {
-        /* map users here */
-        props.users.map((user) => (
-          <Link
-            key={user.id}
-            href={"/chat/" + user.id}
-            className="flex gap-4 p-4 hover:bg-hover/10 transition-all duration-300"
-          >
-            <AvatarComponent user={user} />
-            <UserItem user={user} showMessage />
-          </Link>
-        ))
-      }
+      {props.users.map((user) => (
+        <UserBox key={user.id} user={user} handleClick={handleClick} />
+      ))}
     </div>
   );
 };
