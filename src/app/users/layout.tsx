@@ -1,4 +1,6 @@
 import getCurrentUser from "@/actions/getCurrentUser";
+import getUsers from "@/actions/getUsers";
+import UserList from "@/components/UserList";
 import Footer from "@/components/organisms/footer";
 import Sidebar from "@/components/organisms/sidebar";
 import {
@@ -14,6 +16,7 @@ export default async function UsersLayout({
   children: React.ReactNode;
 }>) {
   const currentUser = await getCurrentUser();
+  const users = await getUsers();
   return (
     <main className="h-screen w-full overflow-hidden relative">
       <div className="h-full w-full">
@@ -25,7 +28,9 @@ export default async function UsersLayout({
             maxSize={50}
           >
             <Suspense fallback={null}>
-              <Sidebar currentUser={currentUser!} />
+              <Sidebar currentUser={currentUser!}>
+                <UserList users={users} />
+              </Sidebar>
             </Suspense>
           </ResizablePanel>
           <ResizableHandle className="hidden lg:block" />
