@@ -1,11 +1,17 @@
+import { cn } from "@/lib/utils";
 import React from "react";
 
-type Props = {};
+type Props = { size: number };
 
 // TODO add online status
 const OnlineIcon = (props: Props) => {
   return (
-    <div className="w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
+    <div
+      className={cn(
+        " bg-green-500 border-2 border-white rounded-full",
+        props.size < 40 ? "w-2 h-2 border-1" : "w-3 h-3"
+      )}
+    ></div>
   );
 };
 
