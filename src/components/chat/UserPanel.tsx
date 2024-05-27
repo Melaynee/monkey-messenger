@@ -1,5 +1,5 @@
-import AvatarComponent from "./Avatar";
-import UserItem from "./UserItem";
+import AvatarComponent from "../Avatar";
+import UserItem from "../UserItem";
 import ChatDropdownMenu from "./ChatDropdownMenu";
 
 interface Props {}

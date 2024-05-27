@@ -5,7 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import { HiDotsVertical } from "react-icons/hi";
 import { RiContactsBookLine } from "react-icons/ri";
 import { MdBlock, MdDeleteOutline, MdOutlineVideoCall } from "react-icons/md";

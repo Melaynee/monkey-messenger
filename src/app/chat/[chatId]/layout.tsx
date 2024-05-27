@@ -1,5 +1,5 @@
-import MessageFooter from "@/components/MessageFooter";
-import UserPanel from "@/components/UserPanel";
+import MessageFooter from "@/components/chat/MessageFooter";
+import UserPanel from "@/components/chat/UserPanel";
 import React from "react";
 
 type Props = { children: React.ReactNode };
