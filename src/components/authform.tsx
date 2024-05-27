@@ -6,8 +6,8 @@ import Input from "./inputs/input";
 import { BsGithub, BsGoogle } from "react-icons/bs";
 import axios from "axios";
 import toast from "react-hot-toast";
-import Button from "./Button";
-import AuthSocialButton from "./AuthSocialButton";
+import Button from "./buttons/Button";
+import AuthSocialButton from "./buttons/AuthSocialButton";
 import { signIn } from "next-auth/react";
 
 type Props = {};

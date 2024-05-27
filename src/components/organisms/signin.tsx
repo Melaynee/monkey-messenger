@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React, { useEffect } from "react";
 import AuthForm from "../AuthForm";
-import AuthButton from "../AuthButton";
+import AuthButton from "../buttons/AuthButton";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";

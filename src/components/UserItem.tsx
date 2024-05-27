@@ -9,7 +9,7 @@ const UserItem = (props: Props) => {
     <div className="">
       <h6
         className={cn(
-          "text-base tracking-wide text-dark",
+          "text-base tracking-wide tеxt-dark cursor-pointer",
           props.showMessage ? "text-dark" : "text-[#fff]"
         )}
       >
