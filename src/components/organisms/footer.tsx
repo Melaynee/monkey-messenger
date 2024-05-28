@@ -18,8 +18,8 @@ const Footer = (props: Props) => {
             key={route.label}
             onClick={route?.onClick}
             className={cn(
-              "flex cursor-pointer text-light hover:text-hover transition-colors duration-300",
-              route?.active && "text-primary"
+              "flex cursor-pointer text-scene hover:text-hover transition-colors duration-300",
+              route?.active && "text-main"
             )}
           >
             {<route.icon size={44} />}

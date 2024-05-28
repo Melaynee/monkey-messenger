@@ -21,8 +21,8 @@ const UserBox: React.FC<Props> = ({
     <button
       key={user.id}
       className={cn(
-        "flex gap-4 p-4 w-full hover:bg-hover/10 transition-all duration-300",
-        selected && "bg-hover hover:bg-primary"
+        "flex gap-4 p-4 w-full hover:bg-light transition-all duration-300",
+        selected && "bg-main hover:bg-hover"
       )}
       onClick={() => handleClick(user)}
     >

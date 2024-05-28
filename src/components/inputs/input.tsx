@@ -18,7 +18,7 @@ const Input: React.FC<InputProps> = (props) => {
     <div>
       <label
         htmlFor={props.id}
-        className="block text-sm font-medium leading-6 text-dark"
+        className="block text-sm font-medium leading-6 text-dark tracking-wide"
       >
         {props.label}
       </label>
@@ -30,7 +30,7 @@ const Input: React.FC<InputProps> = (props) => {
           disabled={props.disabled}
           {...props.register(props.id, { required: props.required })}
           className={cn(
-            "form-input block w-full rounded-md border-0 py-1.5 text-darg shadow-sm ring-1 ring-inset ring-light placeholder:text-light focus:ring-2 focus:ring-inset focus:ring-hover sm:text-sm sm:leading-6",
+            "form-input block w-full rounded-md border-0 70 p-1.5 text-dark shadow-sm ring-1 ring-inset ring-dark/20 placeholder:text-dark/70 focus:ring-2 focus:ring-inset focus:ring-main sm:text-sm sm:leading-6",
             props.errors[props.id] && "focus:ring-rose-500",
             props.disabled && "opacity-50 cursor-default"
           )}

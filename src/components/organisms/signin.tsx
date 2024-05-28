@@ -23,7 +23,7 @@ const Authorization = (props: Props) => {
   }, [session.status, router]);
   return (
     <div
-      className="flex flex-col items-center  mx-auto transition-all duration-700 ease-in-out"
+      className="flex flex-col items-center mx-auto transition-all duration-700 ease-in-out"
       style={{
         transform: `${open ? "translate(0%, -5%)" : "translate(0%, 0%)"}`,
       }}

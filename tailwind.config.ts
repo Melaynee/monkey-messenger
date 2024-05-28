@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-const colors = require("tailwindcss/colors");
 
 const config = {
   darkMode: ["class"],
@@ -11,12 +10,6 @@ const config = {
   ],
   prefix: "",
   theme: {
-    colors: {
-      primary: "#0088CC",
-      hover: "#179CDE",
-      light: "#8C8C8C",
-      dark: "#333333",
-    },
     container: {
       center: true,
       padding: "2rem",
@@ -31,6 +24,14 @@ const config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
@@ -51,7 +52,13 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        ...colors,
+
+        neutral: "#e0d8cb",
+        light: "#ecf5fc",
+        scene: "#c8d9e9",
+        hover: "#1b92d2",
+        main: "#37afe2",
+        dark: "#333333",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -74,10 +81,7 @@ const config = {
       },
     },
   },
-  plugins: [
-    require("tailwindcss-animate"),
-    require("@tailwindcss/forms")({ strategy: "class" }),
-  ],
+  plugins: [require("tailwindcss-animate")],
 } satisfies Config;
 
 export default config;

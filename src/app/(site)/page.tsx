@@ -5,7 +5,7 @@ type Props = {};
 
 const page = (props: Props) => {
   return (
-    <section className="flex min-h-full min-w-full items-center bg-primary">
+    <section className="flex min-h-full min-w-full items-center bg-main">
       <Authorization />
     </section>
   );

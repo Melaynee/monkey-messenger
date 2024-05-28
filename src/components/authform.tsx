@@ -82,7 +82,7 @@ const AuthForm = (props: Props) => {
   };
   return (
     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-      <div className="bg-[#fff] px-4 py-8 shadow sm:rounded-lg sm:px-10">
+      <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           {variant === "REGISTER" && (
             <Input
@@ -118,10 +118,12 @@ const AuthForm = (props: Props) => {
         <div className="mt-6">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
+              <div className="w-full border-t border-neutral"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="bg-white px-2 text-light">Or continue with</span>
+              <span className="bg-white px-2 text-dark/60">
+                Or continue with
+              </span>
             </div>
           </div>
           <div className="mt-6 flex gap-2">
@@ -134,7 +136,7 @@ const AuthForm = (props: Props) => {
               onClick={() => socialAction("google")}
             />
           </div>
-          <div className="flex gap-2 justify-center text-sm mt-6 px-6 text-light">
+          <div className="flex gap-2 justify-center text-sm mt-6 px-6 text-dark/60">
             {variant === "LOGIN"
               ? "New to Messenger?"
               : "Already have an account?"}

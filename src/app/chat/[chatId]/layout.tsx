@@ -12,7 +12,7 @@ const ChatPageLayout = (props: Props) => {
           <UserPanel />
         </div>
       </div>
-      {props.children}
+      {props.childreden}
       <div className="mx-auto">
         <MessageFooter />
       </div>

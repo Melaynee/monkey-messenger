@@ -24,7 +24,7 @@ const MessageForm = ({ onSubmit }: Props) => {
       />
       <button
         type="submit"
-        className="p-2 flex items-center gap-2 border  border-light rounded-r-md bg-hover hover:bg-primary text-white transition-colors duration-300"
+        className="p-2 flex items-center gap-2 border  border-light rounded-r-md bg-main hover:bg-hover text-white transition-colors duration-300"
       >
         Send <FaPaperPlane />
       </button>
