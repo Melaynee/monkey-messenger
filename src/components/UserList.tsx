@@ -24,11 +24,14 @@ const UserList = (props: Props) => {
     [router]
   );
   return (
-    <div className="my-1 w-full">
+    <aside className="my-1 w-full">
+      <div className="flex justify-between mb-4 px-5">
+        <div className="text-2xl font-bold text-dark">Users</div>
+      </div>
       {props.users.map((user) => (
         <UserBox key={user.id} user={user} handleClick={handleClick} />
       ))}
-    </div>
+    </aside>
   );
 };
 

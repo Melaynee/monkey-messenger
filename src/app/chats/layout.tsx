@@ -28,7 +28,7 @@ const ChatsLayout: React.FC<Props> = async ({ children }) => {
           >
             <Suspense fallback={null}>
               <Sidebar currentUser={currentUser!}>
-                <ChatList chats={chats} />
+                <ChatList initialItems={chats} />
               </Sidebar>
             </Suspense>
           </ResizablePanel>

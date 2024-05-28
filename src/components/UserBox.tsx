@@ -19,7 +19,6 @@ const UserBox: React.FC<Props> = ({
 }) => {
   return (
     <button
-      key={user.id}
       className={cn(
         "flex gap-4 p-4 w-full hover:bg-light transition-all duration-300",
         selected && "bg-main hover:bg-hover"
@@ -27,7 +26,7 @@ const UserBox: React.FC<Props> = ({
       onClick={() => handleClick(user)}
     >
       <AvatarComponent user={user} />
-      <UserItem user={user} showMessage={!!showMessage} selected={!!selected} />
+      <UserItem user={user} showMessage={!!showMessage} />
     </button>
   );
 };
