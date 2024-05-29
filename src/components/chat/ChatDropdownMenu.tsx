@@ -18,7 +18,7 @@ const ChatDropdownMenu = (props: Props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="focus:outline-none flex items-center">
-        <HiDotsVertical className="text-[#fff]" />
+        <HiDotsVertical size={20} className="text-[#fff]" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="opacity-90 -translate-x-5 translate-y-5">
         <DropdownMenuItem className="flex gap-2 cursor-pointer">

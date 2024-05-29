@@ -17,7 +17,7 @@ const ChatsLayout: React.FC<Props> = async ({ children }) => {
   const chats = await getChats();
 
   return (
-    <main className="h-screen w-full overflow-hidden relative">
+    <main className="h-full w-full ">
       <div className="h-full w-full">
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel
