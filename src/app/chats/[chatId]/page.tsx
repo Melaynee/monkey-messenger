@@ -4,6 +4,7 @@ import EmpyState from "@/components/chat/EmpyState";
 import ChatFooter from "@/components/chat/ChatFooter";
 import ChatHeader from "@/components/chat/ChatHeader";
 import React from "react";
+import ChatBody from "@/components/chat/ChatBody";
 
 interface IParams {
   chatId: string;
@@ -27,9 +28,9 @@ const ChatPage = async ({ params }: { params: IParams }) => {
   return (
     <div className="w-full h-full flex flex-col gap-2 pb-5 bg-scene ">
       <ChatHeader chat={chat} />
-      <div className="w-full h-full overflow-y-auto">
-        <div className="flex-1 w-3/4 mx-auto ">
-          <div className="bg-neutral"></div>
+      <div className="w-full h-full -mt-2 overflow-y-auto">
+        <div className="bg-neutral">
+          <ChatBody messages={messages} />
         </div>
       </div>
       <ChatFooter />
