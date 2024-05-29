@@ -7,7 +7,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
 import { FaPaperPlane } from "react-icons/fa";
 import { HiPhoto } from "react-icons/hi2";
-
+import { CldUploadButton } from "next-cloudinary";
 type Props = {};
 
 const ChatFooter = (props: Props) => {
@@ -41,9 +41,14 @@ const ChatFooter = (props: Props) => {
 
   return (
     <div className="flex  items-center justify-between w-3/4 mx-auto">
-      <button className="bg-white border-r-2 border-scene p-2 rounded-full rounded-r-none">
+      <CldUploadButton
+        options={{ maxFiles: 1 }}
+        onSuccess={handleUpload}
+        uploadPreset="xomlbhyy"
+        className="bg-white border-r-2 border-scene p-2 rounded-full rounded-r-none"
+      >
         <HiPhoto size={26} className="text-sky-500" />
-      </button>
+      </CldUploadButton>
 
       <form
         onSubmit={handleSubmit(onSubmit)}

@@ -29,9 +29,7 @@ const ChatPage = async ({ params }: { params: IParams }) => {
     <div className="w-full h-full flex flex-col gap-2 pb-5 bg-scene ">
       <ChatHeader chat={chat} />
       <div className="w-full h-full -mt-2 overflow-y-auto">
-        <div className="bg-neutral">
-          <ChatBody messages={messages} />
-        </div>
+        <ChatBody initialMessages={messages} />
       </div>
       <ChatFooter />
     </div>
