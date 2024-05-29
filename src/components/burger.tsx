@@ -12,11 +12,14 @@ import useRoutes from "@/hooks/useRoutes";
 import Link from "next/link";
 import { User } from "@prisma/client";
 import AvatarComponent from "./Avatar";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 type Props = { currentUser: User };
 
 const BurgerComponent = (props: Props) => {
   const routes = useRoutes();
+  const currentPath = usePathname();
 
   return (
     <div className="">
@@ -38,9 +41,17 @@ const BurgerComponent = (props: Props) => {
           <DropdownMenuSeparator />
 
           {routes.map((route) => (
-            <DropdownMenuItem key={route.label}>
+            <DropdownMenuItem
+              key={route.label}
+              className={cn(
+                currentPath === route.href && "bg-main text-light "
+              )}
+            >
               <Link
-                className="flex gap-2 items-center cursor-pointer"
+                className={cn(
+                  "flex gap-2 items-center cursor-pointer",
+                  currentPath === route.href && "cursor-not-allowed"
+                )}
                 href={route.href}
                 onClick={route?.onClick}
               >
