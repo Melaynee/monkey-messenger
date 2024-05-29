@@ -2,13 +2,7 @@ import { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Chat, Message, User } from "@prisma/client";
-import {
-  format,
-  formatDistanceToNow,
-  isAfter,
-  subHours,
-  subMinutes,
-} from "date-fns";
+
 import { cn } from "@/lib/utils";
 import { FullChatType } from "@/types";
 import useOtherUser from "@/hooks/useOtherUser";
@@ -70,7 +64,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ data, selected }: ChatBoxProps) => {
       className={cn(
         "w-full p-2 mb-1 cursor-pointer flex items-center gap-3 text-dark hover:bg-light",
         {
-          "bg-main text-white ": selected,
+          "bg-main text-white hover:bg-main ": selected,
         }
       )}
     >
@@ -88,8 +82,9 @@ const ChatBox: React.FC<ChatBoxProps> = ({ data, selected }: ChatBoxProps) => {
         </div>
         <p
           className={cn(
-            "text-xs font-light",
-            hasSeen || "text-main font-medium"
+            "text-xs font-light ",
+            hasSeen || "text-main font-medium",
+            selected && "text-white"
           )}
         >
           {lastMessageText}
