@@ -26,7 +26,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ data, selected }: ChatBoxProps) => {
   const router = useRouter();
 
   const handleClick = useCallback(() => {
-    router.push(`/chat/${data.id}`);
+    router.push(`/chats/${data.id}`);
   }, [data.id, router]);
 
   const lastMessage = useMemo(() => {
@@ -75,14 +75,24 @@ const ChatBox: React.FC<ChatBoxProps> = ({ data, selected }: ChatBoxProps) => {
       )}
     >
       <AvatarComponent user={otherUser} />
-      <div className="flex flex-col">
-        <h6 className="font-medium">{data.name ?? otherUser?.name}</h6>
-        <p className="text-xs font-light">
-          {true && (
-            <span>
-              <LastMessageTime date={"2024-05-27T05:00:00.000Z"} />
-            </span>
+      <div className="flex flex-col w-full">
+        <div className="flex justify-between items-center">
+          <h6 className="font-medium ">{data.name ?? otherUser?.name} </h6>
+          <div className="">
+            {lastMessage?.createdAt && (
+              <span className="text-xs font-light">
+                <LastMessageTime date={lastMessage.createdAt} />
+              </span>
+            )}
+          </div>
+        </div>
+        <p
+          className={cn(
+            "text-xs font-light",
+            hasSeen || "text-main font-medium"
           )}
+        >
+          {lastMessageText}
         </p>
       </div>
     </div>

@@ -7,7 +7,7 @@ import {
   subHours,
   subQuarters,
 } from "date-fns";
-type Props = { date: string };
+type Props = { date: Date | string };
 
 const LastMessageTime: React.FC<Props> = ({ date }) => {
   const arrivedDate = new Date(date);

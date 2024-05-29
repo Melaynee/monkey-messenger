@@ -9,5 +9,3 @@ export type FullChatType = Chat & {
   users: User[];
   messages: FullMessageType[];
 };
-
-

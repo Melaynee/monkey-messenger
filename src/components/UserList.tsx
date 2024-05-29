@@ -18,7 +18,7 @@ const UserList = (props: Props) => {
         .post("/api/chats", {
           userId: user.id,
         })
-        .then((res) => router.push(`/chat/${res.data.id}`))
+        .then((res) => router.push(`/chats/${res.data.id}`))
         .finally(() => setIsLoading(false));
     },
     [router]
