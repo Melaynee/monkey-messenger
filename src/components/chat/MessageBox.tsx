@@ -18,28 +18,44 @@ const MessageBox = (props: Props) => {
   const [imageModalOpen, setImageModalOpen] = useState(false);
 
   const isOwn = session?.data?.user?.email === props.data?.sender?.email;
-  const seenList = (props.data!.seen ?? [])
+  const seenList = (props.data?.seen || [])
     .filter((user: User) => user.email !== props.data?.sender?.email)
     .map((user: User) => user.name)
     .join(", ");
 
   return (
-    <div className={cn("flex gap-3 p-4", isOwn && "items-end")}>
-      <div className={cn(isOwn && "order-2")}>
+    <div
+      className={cn(
+        "flex max-w-[60%] gap-3 p-4",
+        isOwn
+          ? "ml-auto items-end justify-end"
+          : "mr-auto items-start justify-start"
+      )}
+    >
+      <div className={cn("min-w-fit", isOwn && "order-2")}>
         <AvatarComponent user={props.data!.sender} />
       </div>
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-1">
-          <div className="text-sm text-light">{props.data!.sender.name}</div>
-          <div className="text-xs text-light">
+      <div className={cn("flex flex-col")}>
+        <div
+          className={cn(
+            "flex items-center justify-between gap-3 py-1 px-2",
+            isOwn
+              ? "bg-main text-white rounded-tl-2xl "
+              : "bg-light text-dark rounded-tr-2xl "
+          )}
+        >
+          <div className="text-sm">{props.data!.sender.name}</div>
+          <div className="text-xs">
             {format(new Date(props.data!.createdAt), "H:m")}
           </div>
         </div>
         <div
           className={cn(
-            "text-sm w-fit overflow-hidden",
-            isOwn ? "bg-main text-white" : "bg-neutral",
-            props.data?.image ? "rounded-md p-0" : "rounded-full py-2 px-3"
+            "text-sm w-full overflow-hidden",
+            isOwn
+              ? "bg-light text-dark rounded-bl-lg"
+              : "bg-white text-dark rounded-br-lg",
+            props.data?.image ? " p-0" : " py-2 px-3"
           )}
         >
           <ImageModal

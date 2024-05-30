@@ -10,7 +10,7 @@ const AvatarComponent: React.FC<Props> = ({ user, size }) => {
   const imageSrc = user?.image ?? "/img/avatar.jpeg";
   const imgSize = size ?? 40;
   return (
-    <div className="relative">
+    <div className="relative min-w-fit">
       <Image
         src={imageSrc}
         alt="avatar"

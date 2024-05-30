@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import Modal from "../Modal";
 
 interface ImageModalProps {
   isOpen?: boolean;
@@ -8,11 +9,11 @@ interface ImageModalProps {
 }
 
 const ImageModal: React.FC<ImageModalProps> = (props) => {
-  if (!src) return null;
+  if (!props.src) return null;
   return (
     <Modal isOpen={props.isOpen} onClose={props.onClose}>
       <div className="w-80 h-80">
-        <Image alt="Image" className="object-cover" fill src={props.src!} />
+        <Image alt="Image" className="object-cover" fill src={props.src} />
       </div>
     </Modal>
   );

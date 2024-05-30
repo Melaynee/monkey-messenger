@@ -62,14 +62,14 @@ const ChatBox: React.FC<ChatBoxProps> = ({ data, selected }: ChatBoxProps) => {
     <div
       onClick={handleClick}
       className={cn(
-        "w-full p-2 mb-1 cursor-pointer flex items-center gap-3 text-dark hover:bg-light",
+        "w-full p-2 mb-1 cursor-pointer flex items-start gap-3 text-dark hover:bg-light",
         {
           "bg-main text-white hover:bg-main ": selected,
         }
       )}
     >
       <AvatarComponent user={otherUser} />
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full max-h-[7vh] pb-1 overflow-hidden">
         <div className="flex justify-between items-center">
           <h6 className="font-medium ">{data.name ?? otherUser?.name} </h6>
           <div className="">
@@ -82,7 +82,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ data, selected }: ChatBoxProps) => {
         </div>
         <p
           className={cn(
-            "text-xs font-light ",
+            "text-xs font-light text-ellipsis ",
             hasSeen || "text-main font-medium",
             selected && "text-white"
           )}
