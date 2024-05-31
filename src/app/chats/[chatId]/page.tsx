@@ -1,6 +1,6 @@
 import getChatById from "@/actions/getChatById";
 import getMessages from "@/actions/getMessages";
-import EmpyState from "@/components/chat/EmpyState";
+import EmpyState from "@/components/EmpyState";
 import ChatFooter from "@/components/chat/ChatFooter";
 import ChatHeader from "@/components/chat/ChatHeader";
 import React from "react";

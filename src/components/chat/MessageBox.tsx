@@ -7,6 +7,7 @@ import AvatarComponent from "../Avatar";
 import { format } from "date-fns";
 import Image from "next/image";
 import ImageModal from "./ImageModal";
+import { FaEye } from "react-icons/fa";
 
 type Props = {
   isLast?: boolean;
@@ -77,7 +78,10 @@ const MessageBox = (props: Props) => {
           )}
         </div>
         {props.isLast && isOwn && seenList.length > 0 && (
-          <div className="text-xs font-light text-light">{`Seen by ${seenList}`}</div>
+          <div className="text-xs font-light text-dark flex gap-2 items-center justify-end ">
+            <FaEye className="text-dark/60" />
+            {seenList}
+          </div>
         )}
       </div>
     </div>

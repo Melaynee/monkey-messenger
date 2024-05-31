@@ -4,16 +4,23 @@ import prisma from "@/lib/prismadb";
 import getCurrentUser from "@/actions/getCurrentUser";
 
 interface IParams {
-  chatId?: string;
+  chatsId?: string;
 }
 
 export async function POST(request: Request, { params }: { params: IParams }) {
   try {
     // Get the current user
     const currentUser = await getCurrentUser();
-    const chatId = params.chatId;
-    if (!currentUser?.id || currentUser?.email)
+    const chatId = params.chatsId;
+    if (!currentUser?.id || !currentUser?.email) {
       return new NextResponse("Unathorized", { status: 401 });
+    }
+
+    if (!chatId) {
+      return new NextResponse(`Chat ID is required`, {
+        status: 400,
+      });
+    }
 
     // Find the chat with the given chatId
     const chat = await prisma.chat.findUnique({
@@ -63,7 +70,6 @@ export async function POST(request: Request, { params }: { params: IParams }) {
     return NextResponse.json(updatedMessage);
   } catch (error) {
     // Log the error and return a 500 response
-    console.error(error, "ERROR_MESSAGE_SEEN");
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

@@ -13,7 +13,7 @@ const ChatBody = ({ initialMessages }: Props) => {
   const { chatId } = useChat();
 
   useEffect(() => {
-    axios.post(`/api/chats/${chatId}/seen`);
+    if (chatId) axios.post(`/api/chats/${chatId}/seen`);
   }, [chatId]);
 
   return (
