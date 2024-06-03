@@ -58,6 +58,7 @@ const Header = (props: Props) => {
           <div className="flex">
             <div className="">
               <ChatDropdownMenu
+                isGroup={props.chat.isGroup ?? false}
                 setIsAddContactsOpen={() => setIsAddContactsOpen(true)}
               />
             </div>

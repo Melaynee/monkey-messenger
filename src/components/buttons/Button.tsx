@@ -25,7 +25,7 @@ const Button: React.FC<ButtonProps> = (props) => {
         props.fullWidth && "w-full",
         props.secondary ? "bg-dark hover:bg-dark/90" : "bg-main",
         props.danger &&
-          "bg-rose-500 hover:bg-rose-600 focus-visible:outline-rose-600",
+          "bg-red-500 hover:bg-red-600 focus-visible:outline-red-600",
         !props.danger && !props.secondary && "bg-main hover:bg-hover"
       )}
     >

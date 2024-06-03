@@ -92,6 +92,7 @@ const ProfileDrawer: React.FC<DrawerProps> = (props) => {
                     >
                       <ProfileDrawerHeader
                         onClose={props.onClose}
+                        isGroup={props.data.isGroup ?? false}
                         setIsAddContactsOpen={() => setIsAddContactsOpen(true)}
                       />
                       <ProfileDrawerAvatar user={otherUser} />

@@ -5,6 +5,7 @@ import { RiContactsBookLine } from "react-icons/ri";
 type Props = {
   onClose: () => void;
   setIsAddContactsOpen: () => void;
+  isGroup?: boolean;
 };
 
 const ProfileDrawerHeader = (props: Props) => {
@@ -19,13 +20,14 @@ const ProfileDrawerHeader = (props: Props) => {
         </div>
         <h3 className="text-xl text-dark font-medium">User Info</h3>
       </div>
-
-      <button
-        className="rounded-full cursor-pointer hover:bg-light text-dark/70 transition-colors duration-300"
-        onClick={props.setIsAddContactsOpen}
-      >
-        <RiContactsBookLine size={26} />
-      </button>
+      {!props.isGroup && (
+        <button
+          className="rounded-full cursor-pointer hover:bg-light text-dark/70 transition-colors duration-300"
+          onClick={props.setIsAddContactsOpen}
+        >
+          <RiContactsBookLine size={26} />
+        </button>
+      )}
     </div>
   );
 };
