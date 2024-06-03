@@ -12,7 +12,9 @@ import { MdBlock, MdDeleteOutline, MdOutlineVideoCall } from "react-icons/md";
 import { IoVolumeMuteOutline } from "react-icons/io5";
 import { BiSelectMultiple } from "react-icons/bi";
 
-type Props = {};
+type Props = {
+  setIsAddContactsOpen: () => void;
+};
 
 const ChatDropdownMenu = (props: Props) => {
   return (
@@ -21,8 +23,11 @@ const ChatDropdownMenu = (props: Props) => {
         <HiDotsVertical size={20} className="text-[#fff]" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="opacity-90 -translate-x-5 translate-y-5">
-        <DropdownMenuItem className="flex gap-2 cursor-pointer">
-          <RiContactsBookLine size={20} /> Add to contacts
+        <DropdownMenuItem
+          className="flex gap-2 cursor-pointer"
+          onClick={props.setIsAddContactsOpen}
+        >
+          <RiContactsBookLine size={20} /> Add contact
         </DropdownMenuItem>
         <DropdownMenuItem className="flex gap-2 cursor-pointer">
           <MdOutlineVideoCall size={20} /> Video Call{" "}

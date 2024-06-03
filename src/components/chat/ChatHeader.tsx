@@ -7,6 +7,7 @@ import useOtherUser from "@/hooks/useOtherUser";
 import { useMemo, useState } from "react";
 import { BiChevronLeft } from "react-icons/bi";
 import ProfileDrawer from "./ProfileDrawer";
+import AddContact from "./AddContact";
 
 interface Props {
   chat: Chat & {
@@ -17,6 +18,7 @@ interface Props {
 const Header = (props: Props) => {
   const otherUser = useOtherUser(props.chat);
   const [isDrawOpen, setIsDrawOpen] = useState(false);
+  const [isAddContactsOpen, setIsAddContactsOpen] = useState(false);
 
   const statusText = useMemo(() => {
     if (props.chat.isGroup) {
@@ -28,6 +30,11 @@ const Header = (props: Props) => {
 
   return (
     <>
+      <AddContact
+        data={otherUser}
+        isOpen={isAddContactsOpen}
+        onClose={() => setIsAddContactsOpen(false)}
+      />
       <ProfileDrawer
         isOpen={isDrawOpen}
         onClose={() => setIsDrawOpen(false)}
@@ -50,7 +57,9 @@ const Header = (props: Props) => {
           </div>
           <div className="flex">
             <div className="">
-              <ChatDropdownMenu />
+              <ChatDropdownMenu
+                setIsAddContactsOpen={() => setIsAddContactsOpen(true)}
+              />
             </div>
           </div>
         </div>

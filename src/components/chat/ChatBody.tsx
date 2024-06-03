@@ -1,7 +1,7 @@
 "use client";
 import useChat from "@/hooks/useChats";
 import { FullMessageType } from "@/types";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import MessageBox from "./MessageBox";
 import axios from "axios";
 
@@ -9,7 +9,6 @@ type Props = { initialMessages?: FullMessageType[] };
 
 const ChatBody = ({ initialMessages }: Props) => {
   const [messages, setMessages] = useState(initialMessages);
-  const bottomRef = useRef<HTMLDivElement>(null);
   const { chatId } = useChat();
 
   useEffect(() => {
@@ -25,7 +24,6 @@ const ChatBody = ({ initialMessages }: Props) => {
           data={message}
         />
       ))}
-      <div ref={bottomRef} className="pt-12" />
     </div>
   );
 };
