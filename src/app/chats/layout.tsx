@@ -1,7 +1,6 @@
 import getChats from "@/actions/getChats";
 import getCurrentUser from "@/actions/getCurrentUser";
 import ChatList from "@/components/chat/ChatList";
-import Footer from "@/components/organisms/footer";
 import Sidebar from "@/components/organisms/sidebar";
 import {
   ResizableHandle,
@@ -20,12 +19,7 @@ const ChatsLayout: React.FC<Props> = async ({ children }) => {
     <main className="h-full w-full ">
       <div className="h-full w-full">
         <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel
-            className="hidden lg:block"
-            minSize={15}
-            defaultSize={25}
-            maxSize={50}
-          >
+          <ResizablePanel minSize={15} defaultSize={25} maxSize={50}>
             <Suspense fallback={null}>
               <Sidebar currentUser={currentUser!}>
                 <ChatList initialItems={chats} />
@@ -33,7 +27,12 @@ const ChatsLayout: React.FC<Props> = async ({ children }) => {
             </Suspense>
           </ResizablePanel>
           <ResizableHandle className="hidden lg:block" />
-          <ResizablePanel minSize={50} defaultSize={75} maxSize={100}>
+          <ResizablePanel
+            minSize={50}
+            defaultSize={75}
+            maxSize={100}
+            className="hidden lg:block"
+          >
             {children}
           </ResizablePanel>
         </ResizablePanelGroup>

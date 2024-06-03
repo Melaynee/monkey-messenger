@@ -9,7 +9,6 @@ import ChatBody from "@/components/chat/ChatBody";
 interface IParams {
   chatId: string;
 }
-type Props = {};
 
 const ChatPage = async ({ params }: { params: IParams }) => {
   const chat = await getChatById(params.chatId);
