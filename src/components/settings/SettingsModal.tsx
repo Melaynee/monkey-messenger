@@ -34,7 +34,7 @@ const SettingsModal = (props: Props) => {
   const image = watch("image");
 
   const handleUpload = (result: any) => {
-    setValue("image", result.secure_url, { shouldValidate: true });
+    setValue("image", result.info?.secure_url, { shouldValidate: true });
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
