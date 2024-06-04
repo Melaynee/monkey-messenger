@@ -6,10 +6,10 @@ import {
   MdDeleteOutline,
   MdOutlineMailOutline,
 } from "react-icons/md";
-import Button from "../buttons/Button";
-import Modal from "../Modal";
+import Button from "../../buttons/Button";
+import Modal from "../../Modal";
 import axios from "axios";
-import RemoveChatModal from "./RemoveChatModal";
+import RemoveChatModal from "../RemoveChatModal";
 import useChat from "@/hooks/useChats";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";

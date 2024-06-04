@@ -6,7 +6,7 @@ import ChatDropdownMenu from "./ChatDropdownMenu";
 import useOtherUser from "@/hooks/useOtherUser";
 import { useMemo, useState } from "react";
 import { BiChevronLeft } from "react-icons/bi";
-import ProfileDrawer from "./ProfileDrawer";
+import ProfileDrawer from "./ProfileDrawer/ProfileDrawer";
 import AddContact from "./AddContact";
 
 interface Props {

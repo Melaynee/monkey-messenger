@@ -8,9 +8,7 @@ import {
 import { Chat, User } from "@prisma/client";
 import { format } from "date-fns";
 import React, { Fragment, useMemo, useState } from "react";
-import { IoClose, IoTrash } from "react-icons/io5";
-import AvatarComponent from "../Avatar";
-import AddContact from "./AddContact";
+import AddContact from "../AddContact";
 import ProfileDrawerHeader from "./ProfileDrawerHeader";
 import ProfileDrawerAvatar from "./ProfileDrawerAvatar";
 import ProfileDrawerInfo from "./ProfileDrawerInfo";

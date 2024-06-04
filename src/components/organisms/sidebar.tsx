@@ -5,7 +5,7 @@ import { User } from "@prisma/client";
 
 type Props = { currentUser: User; children: React.ReactNode };
 
-const Sidebar = async (props: Props) => {
+const Sidebar = (props: Props) => {
   return (
     <div className="bg-[#fff] h-full min-h-screen py-4">
       <div className="flex items-center justify-around mb-4">

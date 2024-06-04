@@ -27,12 +27,7 @@ const ChatsLayout: React.FC<Props> = async ({ children }) => {
             </Suspense>
           </ResizablePanel>
           <ResizableHandle className="hidden lg:block" />
-          <ResizablePanel
-            minSize={50}
-            defaultSize={75}
-            maxSize={100}
-            className="hidden lg:block"
-          >
+          <ResizablePanel minSize={50} defaultSize={75} maxSize={100}>
             {children}
           </ResizablePanel>
         </ResizablePanelGroup>
