@@ -6,31 +6,40 @@ import ChatBox from "./ChatBox";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { MdOutlineGroupAdd } from "react-icons/md";
+import Modal from "../Modal";
+import GroupChatModal from "./GroupChatModal";
+import { User } from "@prisma/client";
 
-type Props = { initialItems: FullChatType[] };
+type Props = { initialItems: FullChatType[]; users: User[] };
 
-const ChatList: React.FC<Props> = ({ initialItems }) => {
+const ChatList: React.FC<Props> = ({ initialItems, users }) => {
   const session = useSession();
   const [items, setItems] = useState(initialItems);
-  const [isOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { chatId } = useChat();
 
-  const router = useRouter();
   return (
-    <aside className="w-full">
-      <div className="flex justify-between mb-4 px-4">
-        <div className="text-2xl font-bold text-dark">Messages</div>
-        <div
-          onClick={() => setIsModalOpen(true)}
-          className="rounded-full p-2 bg-light text-gray-600 cursor-pointer hover:opacity-75 transition"
-        >
-          <MdOutlineGroupAdd size={20} />
+    <>
+      <GroupChatModal
+        users={users}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
+      <aside className="w-full">
+        <div className="flex justify-between mb-4 px-4">
+          <div className="text-2xl font-bold text-dark">Messages</div>
+          <div
+            onClick={() => setIsModalOpen(true)}
+            className="rounded-full p-2 bg-light text-gray-600 cursor-pointer hover:opacity-75 transition"
+          >
+            <MdOutlineGroupAdd size={20} />
+          </div>
         </div>
-      </div>
-      {items?.map((item) => (
-        <ChatBox key={item.id} data={item} selected={chatId === item.id} />
-      ))}
-    </aside>
+        {items?.map((item) => (
+          <ChatBox key={item.id} data={item} selected={chatId === item.id} />
+        ))}
+      </aside>
+    </>
   );
 };
 

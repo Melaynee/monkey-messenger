@@ -1,5 +1,6 @@
 import getChats from "@/actions/getChats";
 import getCurrentUser from "@/actions/getCurrentUser";
+import getUsers from "@/actions/getUsers";
 import ChatList from "@/components/chat/ChatList";
 import Sidebar from "@/components/organisms/sidebar";
 import {
@@ -14,6 +15,7 @@ type Props = { children: React.ReactNode };
 const ChatsLayout: React.FC<Props> = async ({ children }) => {
   const currentUser = await getCurrentUser();
   const chats = await getChats();
+  const users = await getUsers();
 
   return (
     <main className="h-full w-full ">
@@ -22,7 +24,7 @@ const ChatsLayout: React.FC<Props> = async ({ children }) => {
           <ResizablePanel minSize={15} defaultSize={25} maxSize={50}>
             <Suspense fallback={null}>
               <Sidebar currentUser={currentUser!}>
-                <ChatList initialItems={chats} />
+                <ChatList initialItems={chats} users={users} />
               </Sidebar>
             </Suspense>
           </ResizablePanel>
