@@ -4,6 +4,7 @@ import { User } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import UserBox from "./UserBox";
+import Loader from "./Loader";
 
 type Props = { users: User[] };
 
@@ -24,14 +25,17 @@ const UserList = (props: Props) => {
     [router]
   );
   return (
-    <aside className="my-1 w-full">
-      <div className="flex justify-between mb-4 px-5">
-        <div className="text-2xl font-bold text-dark">Users</div>
-      </div>
-      {props.users.map((user) => (
-        <UserBox key={user.id} user={user} handleClick={handleClick} />
-      ))}
-    </aside>
+    <>
+      {isLoading && <Loader />}
+      <aside className="my-1 w-full">
+        <div className="flex justify-between mb-4 px-5">
+          <div className="text-2xl font-bold text-dark">Users</div>
+        </div>
+        {props.users.map((user) => (
+          <UserBox key={user.id} user={user} handleClick={handleClick} />
+        ))}
+      </aside>
+    </>
   );
 };
 
