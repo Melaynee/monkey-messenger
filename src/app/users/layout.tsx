@@ -1,7 +1,6 @@
 import getCurrentUser from "@/actions/getCurrentUser";
 import getUsers from "@/actions/getUsers";
 import UserList from "@/components/UserList";
-import Footer from "@/components/organisms/footer";
 import Sidebar from "@/components/organisms/sidebar";
 import {
   ResizableHandle,

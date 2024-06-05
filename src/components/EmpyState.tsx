@@ -2,9 +2,7 @@ import getChats from "@/actions/getChats";
 import getCurrentUser from "@/actions/getCurrentUser";
 import getUsers from "@/actions/getUsers";
 import React from "react";
-import ChatList from "./chat/ChatList";
 import Footer from "./organisms/footer";
-import UserList from "./UserList";
 import SwitchList from "./SwitchList";
 
 type Props = {};
