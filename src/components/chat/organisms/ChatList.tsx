@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import { FullChatType } from "@/types";
 import useChat from "@/hooks/useChats";
-import ChatBox from "./ChatBox";
+import ChatBox from "../ChatBox";
 import { useSession } from "next-auth/react";
 import { MdOutlineGroupAdd } from "react-icons/md";
-import GroupChatModal from "./GroupChatModal";
+import GroupChatModal from "../GroupChat/GroupChatModal";
 import { User } from "@prisma/client";
 
 type Props = { initialItems: FullChatType[]; users: User[] };

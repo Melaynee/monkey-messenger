@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import MessageForm from "./MessageInput";
+import MessageForm from "../MessageInput";
 import useChat from "@/hooks/useChats";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";

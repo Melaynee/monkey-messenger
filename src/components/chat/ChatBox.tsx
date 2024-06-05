@@ -8,6 +8,7 @@ import { FullChatType } from "@/types";
 import useOtherUser from "@/hooks/useOtherUser";
 import AvatarComponent from "../Avatar";
 import LastMessageTime from "../LastMessageTime";
+import AvatarGroup from "./GroupChat/AvatarGroup";
 
 type ChatBoxProps = {
   data: FullChatType;
@@ -68,7 +69,12 @@ const ChatBox: React.FC<ChatBoxProps> = ({ data, selected }: ChatBoxProps) => {
         }
       )}
     >
-      <AvatarComponent user={otherUser} />
+      {" "}
+      {data.isGroup ? (
+        <AvatarGroup users={data.users} />
+      ) : (
+        <AvatarComponent user={otherUser} />
+      )}
       <div className="flex flex-col w-full max-h-[7vh] pb-1 overflow-hidden">
         <div className="flex justify-between items-center">
           <h6 className="font-medium ">{data.name ?? otherUser?.name} </h6>

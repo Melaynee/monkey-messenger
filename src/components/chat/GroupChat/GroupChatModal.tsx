@@ -4,10 +4,10 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import Modal from "../Modal";
-import Input from "../inputs/input";
-import Select from "../inputs/select";
-import Button from "../buttons/Button";
+import Modal from "../../Modal";
+import Input from "../../inputs/input";
+import Select from "../../inputs/select";
+import Button from "../../buttons/Button";
 
 type Props = {
   isOpen: boolean;

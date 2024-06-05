@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import ChatList from "./chat/ChatList";
+import ChatList from "./chat/organisms/ChatList";
 import UserList from "./UserList";
 import { User } from "@prisma/client";
 import { usePathname } from "next/navigation";

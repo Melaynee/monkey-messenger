@@ -10,7 +10,7 @@ type Props = {
 
 const ProfileDrawerHeader = (props: Props) => {
   return (
-    <div className="flex items-center justify-between px-2">
+    <div className="flex items-center justify-between px-2 pb-4">
       <div className="flex items-center gap-3">
         <div
           className="rounded-full cursor-pointer hover:bg-light text-dark/70 transition-colors duration-300"

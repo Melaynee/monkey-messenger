@@ -26,7 +26,11 @@ const ProfileDrawerAvatar = (props: Props) => {
           <div className="text-2xl font-medium">
             {props.chat?.name ?? props.user.name}
           </div>
-          <div className="text-xl font-light">status</div>
+          <div className="text-xl font-light">
+            {props.chat?.isGroup
+              ? `${props.chat.users.length} members `
+              : `status`}
+          </div>
         </div>
       </div>
     </div>

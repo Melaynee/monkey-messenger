@@ -1,10 +1,10 @@
 import getChatById from "@/actions/getChatById";
 import getMessages from "@/actions/getMessages";
 import EmpyState from "@/components/EmpyState";
-import ChatFooter from "@/components/chat/ChatFooter";
-import ChatHeader from "@/components/chat/ChatHeader";
+import ChatFooter from "@/components/chat/organisms/ChatFooter";
+import ChatHeader from "@/components/chat/organisms/ChatHeader";
 import React from "react";
-import ChatBody from "@/components/chat/ChatBody";
+import ChatBody from "@/components/chat/organisms/ChatBody";
 
 interface IParams {
   chatId: string;

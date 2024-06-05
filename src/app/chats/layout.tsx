@@ -1,7 +1,7 @@
 import getChats from "@/actions/getChats";
 import getCurrentUser from "@/actions/getCurrentUser";
 import getUsers from "@/actions/getUsers";
-import ChatList from "@/components/chat/ChatList";
+import ChatList from "@/components/chat/organisms/ChatList";
 import Sidebar from "@/components/organisms/sidebar";
 import {
   ResizableHandle,

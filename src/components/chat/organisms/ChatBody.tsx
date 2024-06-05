@@ -2,7 +2,7 @@
 import useChat from "@/hooks/useChats";
 import { FullMessageType } from "@/types";
 import React, { useEffect, useState } from "react";
-import MessageBox from "./MessageBox";
+import MessageBox from "../MessageBox";
 import axios from "axios";
 
 type Props = { initialMessages?: FullMessageType[] };

@@ -1,14 +1,15 @@
 "use client";
 import { Chat, User } from "@prisma/client";
-import AvatarComponent from "../Avatar";
-import UserItem from "../UserItem";
-import ChatDropdownMenu from "./ChatDropdownMenu";
+import AvatarComponent from "../../Avatar";
+import UserItem from "../../UserItem";
+import ChatDropdownMenu from "../ChatDropdownMenu";
 import useOtherUser from "@/hooks/useOtherUser";
 import { useMemo, useState } from "react";
 import { BiChevronLeft } from "react-icons/bi";
-import ProfileDrawer from "./ProfileDrawer/ProfileDrawer";
-import AddContact from "./AddContact";
+import ProfileDrawer from "../ProfileDrawer/ProfileDrawer";
+import AddContact from "../AddContact";
 import { useRouter } from "next/navigation";
+import AvatarGroup from "../GroupChat/AvatarGroup";
 
 interface Props {
   chat: Chat & {
@@ -56,7 +57,12 @@ const Header = (props: Props) => {
         </div>
         <div className="w-full flex justify-between items-center">
           <div className="flex gap-2" onClick={() => setIsDrawOpen(true)}>
-            <AvatarComponent user={otherUser} />
+            {props.chat.isGroup ? (
+              <AvatarGroup users={props.chat.users} />
+            ) : (
+              <AvatarComponent user={otherUser} />
+            )}
+
             <UserItem
               user={otherUser}
               chatName={props?.chat.name}
