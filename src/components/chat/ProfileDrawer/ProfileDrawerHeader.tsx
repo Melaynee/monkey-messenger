@@ -18,7 +18,9 @@ const ProfileDrawerHeader = (props: Props) => {
         >
           <IoClose size={32} />
         </div>
-        <h3 className="text-xl text-dark font-medium">User Info</h3>
+        <h3 className="text-xl text-dark font-medium">
+          {props.isGroup ? "Group Info" : "User Info"}
+        </h3>
       </div>
       {!props.isGroup && (
         <button

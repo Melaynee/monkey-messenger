@@ -93,8 +93,11 @@ const ProfileDrawer: React.FC<DrawerProps> = (props) => {
                         isGroup={props.data.isGroup ?? false}
                         setIsAddContactsOpen={() => setIsAddContactsOpen(true)}
                       />
-                      <ProfileDrawerAvatar user={otherUser} />
-                      <ProfileDrawerInfo user={otherUser} />
+                      <ProfileDrawerAvatar chat={props.data} user={otherUser} />
+                      <ProfileDrawerInfo
+                        isGroup={props.data.isGroup ?? false}
+                        user={otherUser}
+                      />
                     </div>
                   </DialogPanel>
                 </TransitionChild>
