@@ -22,7 +22,6 @@ interface DrawerProps {
 }
 
 const ProfileDrawer: React.FC<DrawerProps> = (props) => {
-  const [confirmOpen, setConfirmOpen] = useState(false);
   const [isAddContactsOpen, setIsAddContactsOpen] = useState<boolean>(false);
   const otherUser = useOtherUser(props.data);
 

@@ -1,3 +1,10 @@
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { Chat, User } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
@@ -14,13 +21,36 @@ const ProfileDrawerAvatar = (props: Props) => {
 
   return (
     <div className="relative">
-      <Image
-        src={imageSrc}
-        width={400}
-        height={400}
-        alt="avatar"
-        className="w-full h-full"
-      />
+      {props.chat?.isGroup ? (
+        <Carousel>
+          <CarouselContent>
+            {props.chat?.users.map((user) => {
+              const imageSrc = user.image ?? "/img/avatar.jpeg";
+              return (
+                <CarouselItem key={user.id}>
+                  <Image
+                    src={imageSrc}
+                    width={400}
+                    height={400}
+                    alt="avatar"
+                    className="w-full h-full"
+                  />
+                </CarouselItem>
+              );
+            })}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      ) : (
+        <Image
+          src={imageSrc}
+          width={400}
+          height={400}
+          alt="avatar"
+          className="w-full h-full"
+        />
+      )}
       <div className="absolute bottom-0 left-0 right-0 min-h-40 bg-gradient-to-b from-transparent to-dark">
         <div className="absolute bottom-5 translate-x-4 text-white">
           <div className="text-2xl font-medium">

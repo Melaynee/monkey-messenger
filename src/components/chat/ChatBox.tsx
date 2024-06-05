@@ -1,7 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { Chat, Message, User } from "@prisma/client";
 
 import { cn } from "@/lib/utils";
 import { FullChatType } from "@/types";
