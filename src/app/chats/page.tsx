@@ -1,4 +1,4 @@
-import WelcomeComponent from "@/components/organisms/welcome";
+import EmpyState from "@/components/EmpyState";
 import React from "react";
 
 type Props = {};
@@ -6,7 +6,7 @@ type Props = {};
 const ChatsPage = (props: Props) => {
   return (
     <div className="h-full">
-      <WelcomeComponent />
+      <EmpyState />
     </div>
   );
 };

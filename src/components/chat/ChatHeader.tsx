@@ -8,6 +8,7 @@ import { useMemo, useState } from "react";
 import { BiChevronLeft } from "react-icons/bi";
 import ProfileDrawer from "./ProfileDrawer/ProfileDrawer";
 import AddContact from "./AddContact";
+import { useRouter } from "next/navigation";
 
 interface Props {
   chat: Chat & {
@@ -20,6 +21,8 @@ const Header = (props: Props) => {
   const [isDrawOpen, setIsDrawOpen] = useState(false);
   const [isAddContactsOpen, setIsAddContactsOpen] = useState(false);
 
+  const router = useRouter();
+
   const statusText = useMemo(() => {
     if (props.chat.isGroup) {
       return `${props.chat.users.length} members`;
@@ -27,6 +30,10 @@ const Header = (props: Props) => {
 
     return "Active";
   }, [props.chat]);
+
+  const handleReturn = () => {
+    router.push("/chats");
+  };
 
   return (
     <>
@@ -41,8 +48,10 @@ const Header = (props: Props) => {
         data={props.chat}
       />
       <div className="w-full flex gap-6 justify-start items-center px-2 md:px-4 lg:px-6 py-2 bg-main h-16 rounded-b-sm">
-        {/* TODO return into chat page */}
-        <div className="flex lg:hidden items-center cursor-pointer text-white hover:text-hover hover:bg-light/10 rounded-full transition-colors duration-300">
+        <div
+          className="flex lg:hidden items-center cursor-pointer text-white hover:text-hover hover:bg-light/10 rounded-full transition-colors duration-300"
+          onClick={handleReturn}
+        >
           <BiChevronLeft size={40} />
         </div>
         <div className="w-full flex justify-between items-center">

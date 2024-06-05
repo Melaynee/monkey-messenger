@@ -39,9 +39,6 @@ export default async function UsersLayout({
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>
-      <div className="absolute bottom-0 left-0 right-0">
-        <Footer currentUser={currentUser!} />
-      </div>
     </main>
   );
 }

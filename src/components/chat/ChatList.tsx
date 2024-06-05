@@ -4,9 +4,7 @@ import { FullChatType } from "@/types";
 import useChat from "@/hooks/useChats";
 import ChatBox from "./ChatBox";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { MdOutlineGroupAdd } from "react-icons/md";
-import Modal from "../Modal";
 import GroupChatModal from "./GroupChatModal";
 import { User } from "@prisma/client";
 

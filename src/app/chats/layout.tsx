@@ -21,7 +21,12 @@ const ChatsLayout: React.FC<Props> = async ({ children }) => {
     <main className="h-full w-full ">
       <div className="h-full w-full">
         <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel minSize={15} defaultSize={25} maxSize={50}>
+          <ResizablePanel
+            minSize={15}
+            defaultSize={25}
+            maxSize={50}
+            className="hidden lg:block"
+          >
             <Suspense fallback={null}>
               <Sidebar currentUser={currentUser!}>
                 <ChatList initialItems={chats} users={users} />
