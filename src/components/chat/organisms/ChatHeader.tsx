@@ -53,6 +53,7 @@ const Header = (props: Props) => {
         isOpen={isDrawOpen}
         onClose={() => setIsDrawOpen(false)}
         data={props.chat}
+        statusText={statusText}
       />
       <div className="w-full flex gap-6 justify-start items-center px-2 md:px-4 lg:px-6 py-2 bg-main h-16 rounded-b-sm">
         <div

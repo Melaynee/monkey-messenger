@@ -19,6 +19,7 @@ interface DrawerProps {
   data: Chat & {
     users: User[];
   };
+  statusText?: string;
 }
 
 const ProfileDrawer: React.FC<DrawerProps> = (props) => {
@@ -32,14 +33,6 @@ const ProfileDrawer: React.FC<DrawerProps> = (props) => {
   const title = useMemo(() => {
     return props.data.name ?? otherUser.name;
   }, [props.data.name, otherUser.name]);
-
-  const statusText = useMemo(() => {
-    if (props.data.isGroup) {
-      return `${props.data.users.length} members.`;
-    }
-    // TODO implement status
-    return "Active";
-  }, [props.data.isGroup, props.data.users]);
 
   return (
     <>
@@ -92,7 +85,11 @@ const ProfileDrawer: React.FC<DrawerProps> = (props) => {
                         isGroup={props.data.isGroup ?? false}
                         setIsAddContactsOpen={() => setIsAddContactsOpen(true)}
                       />
-                      <ProfileDrawerAvatar chat={props.data} user={otherUser} />
+                      <ProfileDrawerAvatar
+                        chat={props.data}
+                        user={otherUser}
+                        statusText={props.statusText}
+                      />
                       <ProfileDrawerInfo
                         isGroup={props.data.isGroup ?? false}
                         user={otherUser}
