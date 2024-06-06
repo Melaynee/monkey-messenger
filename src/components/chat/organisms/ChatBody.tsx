@@ -1,18 +1,59 @@
 "use client";
 import useChat from "@/hooks/useChats";
 import { FullMessageType } from "@/types";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import MessageBox from "../MessageBox";
 import axios from "axios";
+import { pusherClient } from "@/lib/pusher";
+import { find } from "lodash";
 
 type Props = { initialMessages?: FullMessageType[] };
 
 const ChatBody = ({ initialMessages }: Props) => {
   const [messages, setMessages] = useState(initialMessages);
   const { chatId } = useChat();
+  const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (chatId) axios.post(`/api/chats/${chatId}/seen`);
+  }, [chatId]);
+
+  useEffect(() => {
+    pusherClient.subscribe(chatId);
+    bottomRef?.current?.scrollIntoView();
+
+    const messageHandler = (message: FullMessageType) => {
+      axios.post(`/api/chats/${chatId}/seen`);
+
+      setMessages((current) => {
+        if (find(current, { id: message.id })) {
+          return current;
+        }
+        return [...current!, message];
+      });
+
+      bottomRef?.current?.scrollIntoView();
+    };
+
+    const updateMessageHandler = (newMessage: FullMessageType) => {
+      setMessages((current) =>
+        current?.map((currentMessage) => {
+          if (currentMessage.id === newMessage.id) {
+            return newMessage;
+          }
+          return currentMessage;
+        })
+      );
+    };
+
+    pusherClient.bind("messages:new", messageHandler);
+    pusherClient.bind("message:update", updateMessageHandler);
+
+    return () => {
+      pusherClient.unsubscribe(chatId);
+      pusherClient.unbind("messages:new", messageHandler);
+      pusherClient.unbind("message:update", updateMessageHandler);
+    };
   }, [chatId]);
 
   return (
@@ -24,6 +65,7 @@ const ChatBody = ({ initialMessages }: Props) => {
           data={message}
         />
       ))}
+      <div ref={bottomRef} className="pt-24" />
     </div>
   );
 };

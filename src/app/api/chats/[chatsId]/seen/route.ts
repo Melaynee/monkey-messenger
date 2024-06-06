@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
 import getCurrentUser from "@/actions/getCurrentUser";
+import { pusherServer } from "@/lib/pusher";
 
 interface IParams {
   chatsId?: string;
@@ -65,6 +66,17 @@ export async function POST(request: Request, { params }: { params: IParams }) {
         },
       },
     });
+
+    await pusherServer.trigger(currentUser.email, "chat:update", {
+      id: chatId,
+      messages: [updatedMessage],
+    });
+
+    if (lastMessage.seenIds.indexOf(currentUser.id) !== -1) {
+      return NextResponse.json(chat);
+    }
+
+    await pusherServer.trigger(chatId, 'message:update', updatedMessage)
 
     // Return the updated message
     return NextResponse.json(updatedMessage);

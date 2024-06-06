@@ -15,7 +15,7 @@ const MessageForm = (props: Props) => {
     <input
       id={props.id}
       type="text"
-      autoComplete={props.id}
+      autoComplete={"off"}
       {...props.register(props.id, { required: props.required })}
       className="flex-1 p-2 text-dark border border-light rounded-tr-lg rounded-bl-none focus:outline-none"
       placeholder={props.placeholder}

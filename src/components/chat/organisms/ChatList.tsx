@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FullChatType } from "@/types";
 import useChat from "@/hooks/useChats";
 import ChatBox from "../ChatBox";
@@ -7,6 +7,8 @@ import { useSession } from "next-auth/react";
 import { MdOutlineGroupAdd } from "react-icons/md";
 import GroupChatModal from "../GroupChat/GroupChatModal";
 import { User } from "@prisma/client";
+import { pusherClient } from "@/lib/pusher";
+import { find } from "lodash";
 
 type Props = { initialItems: FullChatType[]; users: User[] };
 
@@ -15,6 +17,44 @@ const ChatList: React.FC<Props> = ({ initialItems, users }) => {
   const [items, setItems] = useState(initialItems);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { chatId } = useChat();
+
+  const pusherKey = useMemo(() => {
+    return session.data?.user?.email;
+  }, [session.data?.user?.email]);
+
+  useEffect(() => {
+    if (!pusherKey) return;
+
+    pusherClient.subscribe(pusherKey);
+
+    const newHandler = (chat: FullChatType) => {
+      setItems((current) => {
+        if (find(current, { id: chat.id })) return current;
+
+        return [chat, ...current];
+      });
+    };
+
+    const updateHandler = (chat: FullChatType) => {
+      setItems((current) =>
+        current.map((currentChat) => {
+          if (currentChat.id === chat.id) {
+            return { ...currentChat, messages: chat.messages };
+          }
+          return currentChat;
+        })
+      );
+    };
+
+    pusherClient.bind("chat:new", newHandler);
+    pusherClient.bind("chat:update", updateHandler);
+
+    return () => {
+      pusherClient.unsubscribe(pusherKey);
+      pusherClient.unbind("chat:new", newHandler);
+      pusherClient.unbind("chat:update", updateHandler);
+    };
+  }, [pusherKey]);
 
   return (
     <>
