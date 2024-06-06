@@ -44,7 +44,8 @@
     "react-spinners": "^0.13.8",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "vaul": "^0.9.1"
+    "vaul": "^0.9.1",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

@@ -10,6 +10,7 @@ import ProfileDrawer from "../ProfileDrawer/ProfileDrawer";
 import AddContact from "../AddContact";
 import { useRouter } from "next/navigation";
 import AvatarGroup from "../GroupChat/AvatarGroup";
+import useActiveList from "@/hooks/useActiveList";
 
 interface Props {
   chat: Chat & {
@@ -22,15 +23,20 @@ const Header = (props: Props) => {
   const [isDrawOpen, setIsDrawOpen] = useState(false);
   const [isAddContactsOpen, setIsAddContactsOpen] = useState(false);
 
+  const { members } = useActiveList();
+
+  const isActive = members.indexOf(otherUser.email!) !== -1;
+
   const router = useRouter();
 
   const statusText = useMemo(() => {
     if (props.chat.isGroup) {
       return `${props.chat.users.length} members`;
     }
+    if (!isActive) return "Offline";
 
     return "Active";
-  }, [props.chat]);
+  }, [props.chat, isActive]);
 
   const handleReturn = () => {
     router.push("/chats");
