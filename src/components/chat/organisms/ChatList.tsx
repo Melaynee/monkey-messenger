@@ -9,6 +9,7 @@ import GroupChatModal from "../GroupChat/GroupChatModal";
 import { User } from "@prisma/client";
 import { pusherClient } from "@/lib/pusher";
 import { find } from "lodash";
+import { useRouter } from "next/navigation";
 
 type Props = { initialItems: FullChatType[]; users: User[] };
 
@@ -17,6 +18,7 @@ const ChatList: React.FC<Props> = ({ initialItems, users }) => {
   const [items, setItems] = useState(initialItems);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { chatId } = useChat();
+  const router = useRouter();
 
   const pusherKey = useMemo(() => {
     return session.data?.user?.email;
@@ -46,15 +48,26 @@ const ChatList: React.FC<Props> = ({ initialItems, users }) => {
       );
     };
 
+    const removeHandler = (chat: FullChatType) => {
+      setItems((current) => {
+        return [...current.filter((singleChat) => singleChat.id !== chat.id)];
+      });
+      if (chatId === chat.id) {
+        router.push("/chats");
+      }
+    };
+
     pusherClient.bind("chat:new", newHandler);
     pusherClient.bind("chat:update", updateHandler);
+    pusherClient.bind("chat:remove", removeHandler);
 
     return () => {
       pusherClient.unsubscribe(pusherKey);
       pusherClient.unbind("chat:new", newHandler);
       pusherClient.unbind("chat:update", updateHandler);
+      pusherClient.unbind("chat:remove", removeHandler);
     };
-  }, [pusherKey]);
+  }, [pusherKey, chatId, router]);
 
   return (
     <>
