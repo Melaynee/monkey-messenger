@@ -12,12 +12,11 @@ type Props = {
 
 const MessageForm = (props: Props) => {
   return (
-    <input
+    <textarea
       id={props.id}
-      type="text"
       autoComplete={"off"}
       {...props.register(props.id, { required: props.required })}
-      className="flex-1 p-2 text-dark border border-light rounded-tr-lg rounded-bl-none focus:outline-none"
+      className="flex-1 p-2 h-[42px] text-dark border border-light rounded-tr-lg rounded-bl-none text-wrap focus:outline-none resize-none  overflow-auto whitespace-nowrap"
       placeholder={props.placeholder}
     />
   );

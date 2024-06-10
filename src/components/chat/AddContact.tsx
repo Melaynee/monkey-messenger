@@ -9,7 +9,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "../ui/drawer";
-import { Button } from "../ui/button";
+import Button from "../buttons/Button";
 import {
   Dialog,
   DialogContent,
@@ -61,7 +61,7 @@ const AddContact = (props: Props) => {
         <ProfileForm user={props.data} className="px-4" />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
-            <Button variant="outline" onClick={props.onClose}>
+            <Button type="button" fullWidth onClick={props.onClose}>
               Cancel
             </Button>
           </DrawerClose>
