@@ -45,10 +45,10 @@ const ChatBody = ({ initialMessages }: Props) => {
         })
       );
     };
-    const deleteMessageHandler = (deletedMessageId: string) => {
-      setMessages((current) =>
-        current?.filter((message) => message.id !== deletedMessageId)
-      );
+    const deleteMessageHandler = (newMessage: FullMessageType) => {
+      setMessages((current) => {
+        return current?.filter((message) => message.id !== newMessage.id);
+      });
     };
 
     pusherClient.bind("messages:new", messageHandler);
