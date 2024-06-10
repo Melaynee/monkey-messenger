@@ -14,7 +14,6 @@ const AvatarComponent: React.FC<Props> = ({ user, size }) => {
   const { members } = useActiveList();
 
   const isActive = members.indexOf(user?.email!) !== -1;
-  console.log(members);
 
   return (
     <div className="relative min-w-fit">

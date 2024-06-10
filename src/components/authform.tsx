@@ -47,7 +47,6 @@ const AuthForm = (props: Props) => {
         .then(() => signIn("credentials", data))
         .then(() => toast.success("Register success"))
         .catch((error) => {
-          console.log(error);
           toast.error("Something went wrong");
         })
         .finally(() => setIsLoading(false));
