@@ -12,7 +12,7 @@ const SwitchList = (props: Props) => {
   const pathname = usePathname();
   return (
     <div className=" overflow-auto">
-      {pathname === "chats" ? (
+      {pathname === "/chats" ? (
         <ChatList initialItems={props.chats} users={props.users} />
       ) : (
         <UserList users={props.users} />
