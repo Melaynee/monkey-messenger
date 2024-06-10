@@ -45,14 +45,21 @@ const ChatBody = ({ initialMessages }: Props) => {
         })
       );
     };
+    const deleteMessageHandler = (deletedMessageId: string) => {
+      setMessages((current) =>
+        current?.filter((message) => message.id !== deletedMessageId)
+      );
+    };
 
     pusherClient.bind("messages:new", messageHandler);
     pusherClient.bind("message:update", updateMessageHandler);
+    pusherClient.bind("message:delete", deleteMessageHandler);
 
     return () => {
       pusherClient.unsubscribe(chatId);
       pusherClient.unbind("messages:new", messageHandler);
       pusherClient.unbind("message:update", updateMessageHandler);
+      pusherClient.unbind("message:delete", deleteMessageHandler);
     };
   }, [chatId]);
 
