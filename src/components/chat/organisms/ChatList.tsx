@@ -38,19 +38,22 @@ const ChatList: React.FC<Props> = ({ initialItems, users }) => {
     };
 
     const updateHandler = (chat: FullChatType) => {
-      setItems((current) =>
-        current.map((currentChat) => {
-          if (currentChat.id === chat.id) {
-            return { ...currentChat, messages: chat.messages };
-          }
-          return currentChat;
-        })
-      );
+      const mappedChat = (currentChat: FullChatType) => {
+        if (currentChat.id === chat.id) {
+          return { ...currentChat, messages: chat.messages };
+        }
+        return currentChat;
+      };
+
+      setItems((current) => current.map(mappedChat));
     };
 
     const removeHandler = (chat: FullChatType) => {
+      const filteredChat = (singleChat: FullChatType) =>
+        singleChat.id !== chat.id;
+
       setItems((current) => {
-        return [...current.filter((singleChat) => singleChat.id !== chat.id)];
+        return [...current.filter(filteredChat)];
       });
       if (chatId === chat.id) {
         router.push("/chats");

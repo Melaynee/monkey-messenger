@@ -36,18 +36,22 @@ const ChatBody = ({ initialMessages }: Props) => {
     };
 
     const updateMessageHandler = (newMessage: FullMessageType) => {
-      setMessages((current) =>
-        current?.map((currentMessage) => {
-          if (currentMessage.id === newMessage.id) {
-            return newMessage;
-          }
-          return currentMessage;
-        })
-      );
+      const mappedMessages = (currentMessage: FullMessageType) => {
+        if (currentMessage.id === newMessage.id) {
+          return newMessage;
+        }
+        return currentMessage;
+      };
+
+      setMessages((current) => current?.map(mappedMessages));
     };
     const deleteMessageHandler = (newMessage: FullMessageType) => {
+      const filteredMessages = (message: FullMessageType) => {
+        return message.id !== newMessage.id;
+      };
+
       setMessages((current) => {
-        return current?.filter((message) => message.id !== newMessage.id);
+        return current?.filter(filteredMessages);
       });
     };
 

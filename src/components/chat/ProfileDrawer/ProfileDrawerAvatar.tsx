@@ -15,6 +15,7 @@ type Props = {
     users: User[];
   };
   statusText?: string;
+  title: string;
 };
 
 const ProfileDrawerAvatar = (props: Props) => {
@@ -54,9 +55,7 @@ const ProfileDrawerAvatar = (props: Props) => {
       )}
       <div className="absolute bottom-0 left-0 right-0 min-h-40 bg-gradient-to-b from-transparent to-dark">
         <div className="absolute bottom-5 translate-x-4 text-white">
-          <div className="text-2xl font-medium">
-            {props.chat?.name ?? props.user.name}
-          </div>
+          <div className="text-2xl font-medium">{props.title}</div>
           <div className="text-xl font-light">
             {props.chat?.isGroup
               ? `${props.chat.users.length} members `

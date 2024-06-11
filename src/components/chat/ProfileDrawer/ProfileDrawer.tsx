@@ -31,7 +31,7 @@ const ProfileDrawer: React.FC<DrawerProps> = (props) => {
   }, [otherUser.createdAt]);
 
   const title = useMemo(() => {
-    return props.data.name ?? otherUser.name;
+    return props.data.name ?? otherUser.name!;
   }, [props.data.name, otherUser.name]);
 
   return (
@@ -89,10 +89,12 @@ const ProfileDrawer: React.FC<DrawerProps> = (props) => {
                         chat={props.data}
                         user={otherUser}
                         statusText={props.statusText}
+                        title={title}
                       />
                       <ProfileDrawerInfo
                         isGroup={props.data.isGroup ?? false}
                         user={otherUser}
+                        joinedDate={joinedDate}
                       />
                     </div>
                   </DialogPanel>

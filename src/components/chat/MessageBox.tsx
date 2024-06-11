@@ -17,7 +17,6 @@ import {
 import { MdDeleteOutline, MdModeEdit, MdReply } from "react-icons/md";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { pusherClient } from "@/lib/pusher";
 
 type Props = {
   isLast?: boolean;

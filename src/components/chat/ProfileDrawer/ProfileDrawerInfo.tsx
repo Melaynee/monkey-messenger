@@ -1,5 +1,4 @@
 import { User } from "@prisma/client";
-import { format } from "date-fns";
 import React, { useCallback, useState } from "react";
 import {
   MdDateRange,
@@ -17,6 +16,7 @@ import toast from "react-hot-toast";
 type Props = {
   user: User;
   isGroup?: boolean;
+  joinedDate: string;
 };
 
 const ProfileDrawerInfo = (props: Props) => {
@@ -60,7 +60,7 @@ const ProfileDrawerInfo = (props: Props) => {
             <div className="flex items-center gap-3">
               <MdDateRange size={32} className="text-dark/80" />
               <div className="flex flex-col">
-                {format(new Date(props.user.createdAt), "PP")}
+                {props.joinedDate}
                 <p className="text-dark/80 text-sm">Joined</p>
               </div>
             </div>
