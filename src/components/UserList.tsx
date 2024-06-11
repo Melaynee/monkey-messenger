@@ -5,6 +5,8 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import UserBox from "./UserBox";
 import Loader from "./Loader";
+import useSearchStore from "@/hooks/useSearchStore";
+import { includes } from "lodash";
 
 type Props = { users: User[] };
 
@@ -24,6 +26,12 @@ const UserList = (props: Props) => {
     },
     [router]
   );
+  const { searchQuery } = useSearchStore();
+
+  const filteredUsers = props.users.filter((user: User) =>
+    includes(user.name?.toLowerCase(), searchQuery.toLowerCase())
+  );
+
   return (
     <>
       {isLoading && <Loader />}
@@ -31,7 +39,7 @@ const UserList = (props: Props) => {
         <div className="flex justify-between mb-4 px-5">
           <div className="text-2xl font-bold text-dark">Users</div>
         </div>
-        {props.users.map((user) => (
+        {filteredUsers.map((user) => (
           <UserBox key={user.id} user={user} handleClick={handleClick} />
         ))}
       </aside>
