@@ -56,6 +56,7 @@ const ChatFooter = (props: Props) => {
       >
         <MessageForm
           id="message"
+          onSubmit={handleSubmit(onSubmit)}
           register={register}
           errors={errors}
           required
