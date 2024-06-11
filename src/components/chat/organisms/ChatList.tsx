@@ -8,8 +8,9 @@ import { MdOutlineGroupAdd } from "react-icons/md";
 import GroupChatModal from "../GroupChat/GroupChatModal";
 import { User } from "@prisma/client";
 import { pusherClient } from "@/lib/pusher";
-import { find } from "lodash";
+import { find, includes } from "lodash";
 import { useRouter } from "next/navigation";
+import useSearchStore from "@/hooks/useSearchStore";
 
 type Props = { initialItems: FullChatType[]; users: User[] };
 
@@ -72,6 +73,18 @@ const ChatList: React.FC<Props> = ({ initialItems, users }) => {
     };
   }, [pusherKey, chatId, router]);
 
+  const { searchQuery } = useSearchStore();
+  const filteredChats = items.filter((current: FullChatType) => {
+    if (!current.name) {
+      const user = current.users.find(
+        (user) => user.email != session.data?.user?.email
+      );
+      if (user?.name)
+        return includes(user?.name.toLowerCase(), searchQuery.toLowerCase());
+    }
+    if (current.name)
+      return includes(current.name.toLowerCase(), searchQuery.toLowerCase());
+  });
   return (
     <>
       <GroupChatModal
@@ -89,7 +102,7 @@ const ChatList: React.FC<Props> = ({ initialItems, users }) => {
             <MdOutlineGroupAdd size={20} />
           </div>
         </div>
-        {items?.map((item) => (
+        {filteredChats?.map((item) => (
           <ChatBox key={item.id} data={item} selected={chatId === item.id} />
         ))}
       </aside>

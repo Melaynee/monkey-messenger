@@ -3,7 +3,6 @@ import React from "react";
 
 type Props = { size: number };
 
-// TODO add online status
 const OnlineIcon = (props: Props) => {
   return (
     <div

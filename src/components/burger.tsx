@@ -54,16 +54,16 @@ const BurgerComponent = (props: Props) => {
             {routes.map((route) => (
               <DropdownMenuItem
                 key={route.label}
+                disabled={currentPath === route.href}
                 className={cn(
+                  "hover:bg-main",
                   currentPath === route.href && "bg-main text-light "
                 )}
               >
                 <Link
-                  className={cn(
-                    "flex gap-2 items-center cursor-pointer",
-                    currentPath === route.href && "cursor-not-allowed"
-                  )}
+                  className={cn("flex gap-2 items-center cursor-pointer ")}
                   href={route.href}
+                  aria-disabled={currentPath === route.href}
                   onClick={route?.onClick}
                 >
                   {<route.icon />}
