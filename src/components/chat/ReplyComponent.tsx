@@ -16,7 +16,7 @@ const ReplyComponent = (props: Props) => {
         <div className="border-r-2 px-2 border-scene">
           <MdReply size={26} className="text-main" />
         </div>
-        <div className="">
+        <div className="bg-light w-full py-1 px-3">
           <p className="text-main/80 text-sm font-medium">
             Replying to{" "}
             <span className="italic">{replyMessage?.sender.name}</span>
