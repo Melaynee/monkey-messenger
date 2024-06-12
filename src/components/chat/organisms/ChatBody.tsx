@@ -6,6 +6,7 @@ import MessageBox from "../MessageBox";
 import axios from "axios";
 import { pusherClient } from "@/lib/pusher";
 import { find } from "lodash";
+import toast from "react-hot-toast";
 
 type Props = { initialMessages?: FullMessageType[] };
 
@@ -15,7 +16,11 @@ const ChatBody = ({ initialMessages }: Props) => {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (chatId) axios.post(`/api/chats/${chatId}/seen`);
+    if (chatId)
+      axios.post(`/api/chats/${chatId}/seen`).catch((err) => {
+        console.log("USE_EFFECT_SEEN_ERR", err);
+        return toast.error("Something went wrong");
+      });
   }, [chatId]);
 
   useEffect(() => {

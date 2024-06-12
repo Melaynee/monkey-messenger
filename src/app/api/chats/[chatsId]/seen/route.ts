@@ -67,6 +67,9 @@ export async function POST(request: Request, { params }: { params: IParams }) {
       },
     });
 
+    if (!updatedMessage)
+      return new NextResponse("Failed to update message", { status: 400 });
+
     await pusherServer.trigger(currentUser.email, "chat:update", {
       id: chatId,
       messages: [updatedMessage],
@@ -76,7 +79,7 @@ export async function POST(request: Request, { params }: { params: IParams }) {
       return NextResponse.json(chat);
     }
 
-    await pusherServer.trigger(chatId, 'message:update', updatedMessage)
+    await pusherServer.trigger(chatId, "message:update", updatedMessage);
 
     // Return the updated message
     return NextResponse.json(updatedMessage);
