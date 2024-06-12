@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import React from "react";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 
@@ -9,6 +10,7 @@ type Props = {
   register: UseFormRegister<FieldValues>;
   errors: FieldValues;
   onSubmit: () => void;
+  replyMessage?: boolean;
 };
 
 const MessageForm = (props: Props) => {
@@ -23,7 +25,10 @@ const MessageForm = (props: Props) => {
         }
       }}
       {...props.register(props.id, { required: props.required })}
-      className="flex-1 p-2 h-[42px] text-dark border border-light rounded-tr-lg rounded-bl-none text-wrap focus:outline-none resize-none  overflow-auto whitespace-nowrap"
+      className={cn(
+        "flex-1 p-2 h-[42px] text-dark border border-light rounded-tr-lg rounded-bl-none text-wrap focus:outline-none resize-none  overflow-auto whitespace-nowrap",
+        props.replyMessage && "rounded-none"
+      )}
       placeholder={props.placeholder}
     />
   );

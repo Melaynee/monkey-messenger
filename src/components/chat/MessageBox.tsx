@@ -17,6 +17,7 @@ import {
 import { MdDeleteOutline, MdModeEdit, MdReply } from "react-icons/md";
 import axios from "axios";
 import toast from "react-hot-toast";
+import useReplyStore from "@/hooks/useReplyStore";
 
 type Props = {
   isLast?: boolean;
@@ -27,6 +28,7 @@ const MessageBox = (props: Props) => {
   const session = useSession();
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { setReplyMessage } = useReplyStore();
 
   const isOwn = session?.data?.user?.email === props.data?.sender?.email;
   const seenList = (props.data?.seen || [])
@@ -44,6 +46,11 @@ const MessageBox = (props: Props) => {
         setIsLoading(false);
       });
   }, [props.data?.id]);
+
+  const handleReply = useCallback(() => {
+    if (!props.data) return;
+    setReplyMessage(props.data);
+  }, [props.data, setReplyMessage]);
 
   return (
     <div
@@ -113,7 +120,10 @@ const MessageBox = (props: Props) => {
             <MdModeEdit size={20} />
             Edit
           </ContextMenuItem>
-          <ContextMenuItem className="flex gap-2 cursor-pointer">
+          <ContextMenuItem
+            className="flex gap-2 cursor-pointer"
+            onClick={handleReply}
+          >
             <MdReply size={20} />
             Reply
           </ContextMenuItem>
