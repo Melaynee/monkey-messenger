@@ -16,7 +16,7 @@ type Props = {};
 
 const ChatFooter = (props: Props) => {
   const { chatId } = useChat();
-  const { replyMessage } = useReplyStore();
+  const { replyMessage, clearReplyMessage } = useReplyStore();
 
   const {
     register,
@@ -32,17 +32,23 @@ const ChatFooter = (props: Props) => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setValue("message", "", { shouldValidate: true });
 
-    axios.post("/api/messages", {
-      ...data,
-      chatId,
-    });
+    axios
+      .post("/api/messages", {
+        ...data,
+        chatId,
+        replyMessage,
+      })
+      .finally(() => clearReplyMessage());
   };
 
   const handleUpload = (result: any) => {
-    axios.post("/api/messages", {
-      image: result?.info?.secure_url,
-      chatId,
-    });
+    axios
+      .post("/api/messages", {
+        image: result?.info?.secure_url,
+        chatId,
+        replyMessage,
+      })
+      .finally(() => clearReplyMessage());
   };
 
   return (

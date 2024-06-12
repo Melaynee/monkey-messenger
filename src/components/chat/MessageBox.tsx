@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { FullMessageType } from "@/types";
+import { FullChatType, FullMessageType } from "@/types";
 import { User } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import React, { useCallback, useState } from "react";
@@ -18,10 +18,11 @@ import { MdDeleteOutline, MdModeEdit, MdReply } from "react-icons/md";
 import axios from "axios";
 import toast from "react-hot-toast";
 import useReplyStore from "@/hooks/useReplyStore";
+import getMessageById from "@/actions/getMessageById";
 
 type Props = {
   isLast?: boolean;
-  data?: FullMessageType;
+  data: FullMessageType;
 };
 
 const MessageBox = (props: Props) => {
@@ -77,7 +78,7 @@ const MessageBox = (props: Props) => {
             >
               <div className="text-sm">{props.data!.sender.name}</div>
               <div className="text-xs">
-                {format(new Date(props.data!.createdAt), "H:m")}
+                {format(new Date(props.data!.createdAt), "H:mm")}
               </div>
             </div>
             <div

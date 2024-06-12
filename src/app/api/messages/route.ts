@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   try {
     const currentUser = await getCurrentUser();
     const body = await request.json();
-    const { message, image, chatId } = body;
+    const { message, image, chatId, replyMessage } = body;
 
     if (!currentUser?.id || !currentUser?.email) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -17,6 +17,7 @@ export async function POST(request: Request) {
       data: {
         body: message,
         image,
+        repliedMessageId: replyMessage.id,
         chat: {
           connect: {
             id: chatId,
