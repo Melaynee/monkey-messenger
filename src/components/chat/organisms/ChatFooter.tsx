@@ -11,6 +11,7 @@ import { CldUploadButton } from "next-cloudinary";
 import ReplyComponent from "../ReplyComponent";
 import useReplyStore from "@/hooks/useReplyStore";
 import { cn } from "@/lib/utils";
+import { BiSend } from "react-icons/bi";
 type Props = {};
 
 const ChatFooter = (props: Props) => {
@@ -75,9 +76,9 @@ const ChatFooter = (props: Props) => {
           />
           <button
             type="submit"
-            className="p-3 flex items-center border border-light rounded-full bg-main hover:bg-hover text-white transition-colors duration-300"
+            className="p-2 flex items-center border border-light rounded-full bg-main hover:bg-hover text-white transition-colors duration-300 -rotate-90"
           >
-            <FaPaperPlane size={20} />
+            <BiSend size={22} />
           </button>
         </form>
       </div>
