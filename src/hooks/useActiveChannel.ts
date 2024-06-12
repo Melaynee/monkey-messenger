@@ -22,13 +22,26 @@ const useActiveChannel = () => {
       );
 
       set(initialMembers);
+      localStorage.setItem("onlineStatus", JSON.stringify(initialMembers));
     });
     channel.bind("pusher:member_added", (member: Record<string, any>) => {
       add(member.id);
+      const updatedMembers = JSON.parse(
+        localStorage.getItem("onlineStatus") ?? "[]"
+      );
+      updatedMembers.push(member.id);
+      localStorage.setItem("onlineStatus", JSON.stringify(updatedMembers));
     });
 
     channel.bind("pusher:member_removed", (member: Record<string, any>) => {
       remove(member.id);
+      const updatedMembers = JSON.parse(
+        localStorage.getItem("onlineStatus") ?? "[]"
+      );
+      const filteredMembers = updatedMembers.filter(
+        (id: string) => id !== member.id
+      );
+      localStorage.setItem("onlineStatus", JSON.stringify(filteredMembers));
     });
     return () => {
       if (activeChannel) {
@@ -37,6 +50,13 @@ const useActiveChannel = () => {
       }
     };
   }, [activeChannel, set, add, remove]);
+  useEffect(() => {
+    const storedOnlineStatus = JSON.parse(
+      localStorage.getItem("onlineStatus") ?? "[]"
+    );
+    set(storedOnlineStatus);
+  }, [set]);
+  return activeChannel;
 };
 
 export default useActiveChannel;
