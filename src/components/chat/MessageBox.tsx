@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { FullMessageType } from "@/types";
 import { User } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import React, { useCallback,  useState } from "react";
+import React, { useCallback, useState } from "react";
 import AvatarComponent from "../Avatar";
 import { format } from "date-fns";
 import Image from "next/image";
@@ -80,7 +80,27 @@ const MessageBox = (props: Props) => {
                 {format(new Date(props.data.createdAt), "H:mm")}
               </div>
             </div>
-
+            {props.data.replyTo && (
+              <div
+                className={cn(
+                  "bg-white py-1 px-2 cursor-default select-none",
+                  isOwn && "bg-light"
+                )}
+              >
+                <div className="bg-neutral p-1 rounded-lg">
+                  <div className="ml-2 pl-2 border-l-2 border-main overflow-hidden max-w-[80%] max-h-16">
+                    <p className="font-medium text-sm ">
+                      {props.data.replyTo.senderId}
+                    </p>
+                    <p className="text-ellipsis text-sm">
+                      {props.data.replyTo?.image
+                        ? "image"
+                        : props.data.replyTo.body}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
             <div
               className={cn(
                 "text-sm w-full overflow-hidden",

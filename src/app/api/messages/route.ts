@@ -17,7 +17,10 @@ export async function POST(request: Request) {
       data: {
         body: message,
         image,
-        repliedMessageId: replyMessage.id,
+        replyTo: replyMessage
+          ? { connect: { id: replyMessage.id, body: replyMessage.body } }
+          : undefined,
+
         chat: {
           connect: {
             id: chatId,
