@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
-import { FullChatType, FullMessageType } from "@/types";
+import { FullMessageType } from "@/types";
 import { User } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import React, { useCallback, useState } from "react";
+import React, { useCallback,  useState } from "react";
 import AvatarComponent from "../Avatar";
 import { format } from "date-fns";
 import Image from "next/image";
@@ -18,7 +18,6 @@ import { MdDeleteOutline, MdModeEdit, MdReply } from "react-icons/md";
 import axios from "axios";
 import toast from "react-hot-toast";
 import useReplyStore from "@/hooks/useReplyStore";
-import getMessageById from "@/actions/getMessageById";
 
 type Props = {
   isLast?: boolean;
@@ -65,7 +64,7 @@ const MessageBox = (props: Props) => {
       <ContextMenu>
         <ContextMenuTrigger className="flex gap-3 p-4">
           <div className={cn("min-w-fit", isOwn && "order-2")}>
-            <AvatarComponent user={props.data!.sender} />
+            <AvatarComponent user={props.data.sender} />
           </div>
           <div className={cn("flex flex-col")}>
             <div
@@ -76,11 +75,12 @@ const MessageBox = (props: Props) => {
                   : "bg-light text-dark rounded-tr-2xl "
               )}
             >
-              <div className="text-sm">{props.data!.sender.name}</div>
+              <div className="text-sm">{props.data.sender.name}</div>
               <div className="text-xs">
-                {format(new Date(props.data!.createdAt), "H:mm")}
+                {format(new Date(props.data.createdAt), "H:mm")}
               </div>
             </div>
+
             <div
               className={cn(
                 "text-sm w-full overflow-hidden",
@@ -91,7 +91,7 @@ const MessageBox = (props: Props) => {
               )}
             >
               <ImageModal
-                src={props.data!.image}
+                src={props.data.image}
                 isOpen={imageModalOpen}
                 onClose={() => setImageModalOpen(false)}
               />

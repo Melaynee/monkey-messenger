@@ -5,7 +5,6 @@ import MessageForm from "../MessageInput";
 import useChat from "@/hooks/useChats";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
-import { FaPaperPlane } from "react-icons/fa";
 import { HiPhoto } from "react-icons/hi2";
 import { CldUploadButton } from "next-cloudinary";
 import ReplyComponent from "../ReplyComponent";
