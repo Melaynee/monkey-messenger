@@ -18,6 +18,7 @@ import { MdDeleteOutline, MdModeEdit, MdReply } from "react-icons/md";
 import axios from "axios";
 import toast from "react-hot-toast";
 import useReplyStore from "@/hooks/useReplyStore";
+import useEditStore from "@/hooks/useEditStore";
 
 type Props = {
   isLast?: boolean;
@@ -28,7 +29,8 @@ const MessageBox = (props: Props) => {
   const session = useSession();
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { setReplyMessage } = useReplyStore();
+  const { setReplyMessage, clearReplyMessage } = useReplyStore();
+  const { setEditMessage, clearEditMessage } = useEditStore();
 
   const isOwn = session?.data?.user?.email === props.data?.sender?.email;
   const seenList = (props.data?.seen || [])
@@ -49,8 +51,15 @@ const MessageBox = (props: Props) => {
 
   const handleReply = useCallback(() => {
     if (!props.data) return;
+    clearEditMessage();
     setReplyMessage(props.data);
-  }, [props.data, setReplyMessage]);
+  }, [props.data, setReplyMessage, clearEditMessage]);
+
+  const handleEdit = useCallback(() => {
+    if (!props.data) return;
+    clearReplyMessage();
+    setEditMessage(props.data);
+  }, [props.data, setEditMessage, clearReplyMessage]);
 
   return (
     <div
@@ -87,7 +96,7 @@ const MessageBox = (props: Props) => {
                   isOwn && "bg-light"
                 )}
               >
-                <div className="bg-neutral p-1 rounded-lg">
+                <div className="bg-scene/90 p-1 rounded-lg">
                   <div className="ml-2 pl-2 border-l-2 border-main overflow-hidden max-w-[80%] max-h-16">
                     <p className="font-medium text-sm ">
                       {props.data.replyTo.senderId}
@@ -137,7 +146,10 @@ const MessageBox = (props: Props) => {
           </div>
         </ContextMenuTrigger>
         <ContextMenuContent className="rounded-3xl opacity-80 px-2 py-4 backdrop-blur-lg">
-          <ContextMenuItem className="flex gap-2 cursor-pointer">
+          <ContextMenuItem
+            className="flex gap-2 cursor-pointer"
+            onClick={handleEdit}
+          >
             <MdModeEdit size={20} />
             Edit
           </ContextMenuItem>

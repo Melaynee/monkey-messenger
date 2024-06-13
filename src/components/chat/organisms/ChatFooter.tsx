@@ -11,11 +11,14 @@ import ReplyComponent from "../ReplyComponent";
 import useReplyStore from "@/hooks/useReplyStore";
 import { cn } from "@/lib/utils";
 import { BiSend } from "react-icons/bi";
+import useEditStore from "@/hooks/useEditStore";
+import EditComponent from "../EditComponent";
 type Props = {};
 
 const ChatFooter = (props: Props) => {
   const { chatId } = useChat();
   const { replyMessage, clearReplyMessage } = useReplyStore();
+  const { editMessage, clearEditMessage } = useEditStore();
 
   const {
     register,
@@ -30,6 +33,12 @@ const ChatFooter = (props: Props) => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setValue("message", "", { shouldValidate: true });
+    if (editMessage) {
+      axios.put(`/api/messages/put`, {
+        ...data,
+        chatId,
+      });
+    }
 
     axios
       .post("/api/messages", {
@@ -37,7 +46,9 @@ const ChatFooter = (props: Props) => {
         chatId,
         replyMessage,
       })
-      .finally(() => clearReplyMessage());
+      .finally(() => {
+        clearReplyMessage();
+      });
   };
 
   const handleUpload = (result: any) => {
@@ -53,6 +64,7 @@ const ChatFooter = (props: Props) => {
   return (
     <div className="flex flex-col w-3/4 mx-auto">
       {replyMessage && <ReplyComponent />}
+      {editMessage && <EditComponent />}
       <div className="flex items-center justify-between">
         <CldUploadButton
           options={{ maxFiles: 1 }}
@@ -60,7 +72,8 @@ const ChatFooter = (props: Props) => {
           uploadPreset="xomlbhyy"
           className={cn(
             "bg-white border-r-2 border-scene p-2 rounded-full rounded-r-none",
-            replyMessage && "rounded-none rounded-bl-lg border-white"
+            replyMessage && "rounded-none rounded-bl-lg border-white",
+            editMessage && "rounded-none rounded-bl-lg border-white"
           )}
         >
           <HiPhoto size={26} className="text-sky-500" />
