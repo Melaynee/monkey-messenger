@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import MessageForm from "../MessageInput";
 import useChat from "@/hooks/useChats";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -31,14 +31,22 @@ const ChatFooter = (props: Props) => {
     },
   });
 
+  useEffect(() => {
+    setValue("message", editMessage?.body);
+  }, [editMessage, setValue]);
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setValue("message", "", { shouldValidate: true });
     if (editMessage) {
-      console.log(editMessage);
+      if (editMessage.body === data.message) {
+        clearEditMessage();
+        return;
+      }
       axios
         .put(`/api/messages/put`, {
           ...data,
           chatId,
+          editMessage,
         })
         .finally(() => clearEditMessage());
       return;
@@ -110,7 +118,6 @@ const ChatFooter = (props: Props) => {
                 errors={errors}
                 required
                 replyMessage={!!replyMessage}
-                editMessage={editMessage}
                 placeholder={"Type your message here..."}
               />
             </div>

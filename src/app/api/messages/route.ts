@@ -40,6 +40,7 @@ export async function POST(request: Request) {
       include: {
         seen: true,
         sender: true,
+        replyTo: true,
       },
     });
 

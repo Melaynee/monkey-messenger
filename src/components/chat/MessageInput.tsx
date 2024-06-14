@@ -1,6 +1,7 @@
+import useEditStore from "@/hooks/useEditStore";
 import { cn } from "@/lib/utils";
 import { FullMessageType } from "@/types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 
 type Props = {
@@ -12,7 +13,6 @@ type Props = {
   errors: FieldValues;
   onSubmit: () => void;
   replyMessage?: boolean;
-  editMessage?: FullMessageType | null;
 };
 
 const MessageForm = (props: Props) => {
@@ -29,10 +29,9 @@ const MessageForm = (props: Props) => {
       {...props.register(props.id, { required: props.required })}
       className={cn(
         "flex-1 p-2 h-full text-dark border border-light rounded-tr-lg rounded-bl-none text-wrap focus:outline-none resize-none  overflow-auto whitespace-nowrap w-full",
-        (props.replyMessage || props.editMessage) && "rounded-none"
+        (props.replyMessage || "") && "rounded-none"
       )}
       placeholder={props.placeholder}
-      value={props.editMessage?.body ?? ""}
     />
   );
 };

@@ -76,6 +76,7 @@ const MessageBox = (props: Props) => {
             <AvatarComponent user={props.data.sender} />
           </div>
           <div className={cn("flex flex-col")}>
+            {/* Name */}
             <div
               className={cn(
                 "flex items-center justify-between gap-3 py-1 px-2",
@@ -85,10 +86,8 @@ const MessageBox = (props: Props) => {
               )}
             >
               <div className="text-sm">{props.data.sender.name}</div>
-              <div className="text-xs">
-                {format(new Date(props.data.createdAt), "H:mm")}
-              </div>
             </div>
+            {/* Reply */}
             {props.data.replyTo && (
               <div
                 className={cn(
@@ -110,6 +109,7 @@ const MessageBox = (props: Props) => {
                 </div>
               </div>
             )}
+            {/* Message Text */}
             <div
               className={cn(
                 "text-sm w-full overflow-hidden",
@@ -134,9 +134,16 @@ const MessageBox = (props: Props) => {
                   className="object-cover cursor-pointer hover:scale-110 transition translate"
                 />
               ) : (
-                <div>{props.data?.body}</div>
+                <div className="">
+                  {props.data?.body}
+                  <span className="text-[10px] font-light translate-y-2 px-1 float-right ">
+                    {props.data.isEdited ? "edited" : ""}{" "}
+                    {format(new Date(props.data.createdAt), "H:mm")}
+                  </span>
+                </div>
               )}
             </div>
+            {/* Seen */}
             {props.isLast && isOwn && seenList.length > 0 && (
               <div className="text-xs font-light text-dark flex gap-2 items-center justify-end ">
                 <FaEye className="text-dark/60" />
@@ -146,13 +153,15 @@ const MessageBox = (props: Props) => {
           </div>
         </ContextMenuTrigger>
         <ContextMenuContent className="rounded-3xl opacity-80 px-2 py-4 backdrop-blur-lg">
-          <ContextMenuItem
-            className="flex gap-2 cursor-pointer"
-            onClick={handleEdit}
-          >
-            <MdModeEdit size={20} />
-            Edit
-          </ContextMenuItem>
+          {isOwn && (
+            <ContextMenuItem
+              className="flex gap-2 cursor-pointer"
+              onClick={handleEdit}
+            >
+              <MdModeEdit size={20} />
+              Edit
+            </ContextMenuItem>
+          )}
           <ContextMenuItem
             className="flex gap-2 cursor-pointer"
             onClick={handleReply}
