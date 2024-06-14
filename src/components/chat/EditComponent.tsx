@@ -1,6 +1,5 @@
-import useReplyStore from "@/hooks/useReplyStore";
 import React from "react";
-import { MdReply } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import useEditStore from "@/hooks/useEditStore";
 
@@ -12,14 +11,18 @@ const EditComponent = (props: Props) => {
     clearEditMessage();
   };
   return (
-    <div className="bg-white py-2 rounded-tl-lg rounded-br-full max-h-[10vh] text-ellipsis overflow-hidden relative">
-      <div className="flex gap-3">
+    <div className="bg-white py-2 h-full rounded-tr-lg relative">
+      <div className="flex gap-3 max-h-[9vh]  h-full text-ellipsis overflow-hidden ">
         <div className="border-r-2 px-2 border-scene">
-          <MdReply size={26} className="text-main" />
+          <MdEdit size={26} className="text-main" />
         </div>
         <div className="bg-light w-full py-1 px-3">
-          <p className="text-main/80 text-sm font-medium">Editing message...</p>
-          <p className="text-dark font-light">{editMessage?.body}</p>
+          <p className="text-xs leading-3 sm:text-sm text-main font-medium">
+            Editing message...
+          </p>
+          <p className="text-dark text-sm leading-3 sm:leading-5 font-light">
+            {editMessage?.body}
+          </p>
         </div>
       </div>
       <div

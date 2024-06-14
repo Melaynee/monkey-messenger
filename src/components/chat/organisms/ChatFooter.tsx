@@ -34,10 +34,14 @@ const ChatFooter = (props: Props) => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setValue("message", "", { shouldValidate: true });
     if (editMessage) {
-      axios.put(`/api/messages/put`, {
-        ...data,
-        chatId,
-      });
+      console.log(editMessage);
+      axios
+        .put(`/api/messages/put`, {
+          ...data,
+          chatId,
+        })
+        .finally(() => clearEditMessage());
+      return;
     }
 
     axios
@@ -63,41 +67,67 @@ const ChatFooter = (props: Props) => {
 
   return (
     <div className="flex flex-col w-3/4 mx-auto">
-      {replyMessage && <ReplyComponent />}
-      {editMessage && <EditComponent />}
       <div className="flex items-center justify-between">
         <CldUploadButton
           options={{ maxFiles: 1 }}
           onSuccess={handleUpload}
           uploadPreset="xomlbhyy"
           className={cn(
-            "bg-white border-r-2 border-scene p-2 rounded-full rounded-r-none",
+            "bg-white border-r-2 border-scene p-2 rounded-full rounded-r-none h-full",
             replyMessage && "rounded-none rounded-bl-lg border-white",
             editMessage && "rounded-none rounded-bl-lg border-white"
           )}
         >
-          <HiPhoto size={26} className="text-sky-500" />
+          <HiPhoto size={32} className="text-sky-500" />
         </CldUploadButton>
 
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex items-center gap-2 lg:gap-4 w-full"
         >
-          <MessageForm
-            id="message"
-            onSubmit={handleSubmit(onSubmit)}
-            register={register}
-            errors={errors}
-            required
-            replyMessage={!!replyMessage}
-            placeholder={"Type your message here..."}
-          />
-          <button
-            type="submit"
-            className="p-2 flex items-center border border-light rounded-full bg-main hover:bg-hover text-white transition-colors duration-300 -rotate-90"
+          <div
+            className={cn(
+              "w-full grid grid-cols-6 ",
+              (replyMessage || editMessage) && " grid-rows-2 "
+            )}
           >
-            <BiSend size={22} />
-          </button>
+            {(replyMessage || editMessage) && (
+              <div className={cn("col-span-5 row-span-1 content-stretch")}>
+                {replyMessage && <ReplyComponent />}
+                {editMessage && <EditComponent />}
+              </div>
+            )}
+            <div
+              className={cn(
+                "col-start-1 col-span-5 content-stretch",
+                (replyMessage || editMessage) && "col-span-5 row-span-2"
+              )}
+            >
+              <MessageForm
+                id="message"
+                onSubmit={handleSubmit(onSubmit)}
+                register={register}
+                errors={errors}
+                required
+                replyMessage={!!replyMessage}
+                editMessage={editMessage}
+                placeholder={"Type your message here..."}
+              />
+            </div>
+            <div
+              className={cn(
+                "col-start-6 justify-self-center self-center content-center ",
+                (replyMessage || editMessage) && "col-start-6 row-span-2"
+              )}
+            >
+              <button
+                type="submit"
+                className="p-2 flex items-center border border-light rounded-full bg-main hover:bg-hover text-white transition-colors duration-300 -rotate-90"
+              >
+                <BiSend size={32} />
+              </button>
+            </div>
+          </div>
         </form>
       </div>
     </div>

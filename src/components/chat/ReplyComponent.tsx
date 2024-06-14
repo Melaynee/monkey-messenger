@@ -11,15 +11,17 @@ const ReplyComponent = (props: Props) => {
     clearReplyMessage();
   };
   return (
-    <div className="bg-white py-2 rounded-tl-lg rounded-br-full max-h-[10vh] text-ellipsis overflow-hidden relative">
-      <div className="flex gap-3">
+    <div className="bg-white py-2 h-full rounded-tr-lg relative">
+      <div className="flex gap-3 max-h-[9vh] text-ellipsis overflow-hidden ">
         <div className="border-r-2 px-2 border-scene">
           <MdReply size={26} className="text-main" />
         </div>
         <div className="bg-light w-full py-1 px-3">
-          <p className="text-main/80 text-sm font-medium">
+          <p className="text-main/80  overflow-hidden text-ellipsis w-[80%] text-nowrap md:w-full text-xs sm:text-sm font-medium">
             Replying to{" "}
-            <span className="italic">{replyMessage?.sender.name}</span>
+            <span className="italic text-xs sm:text-sm">
+              {replyMessage?.sender.name}
+            </span>
           </p>
           <p className="text-dark font-light">{replyMessage?.body}</p>
         </div>
