@@ -1,13 +1,14 @@
 import prisma from "@/lib/prismadb";
 import getCurrentUser from "./getCurrentUser";
+import { Chat, User } from "@prisma/client";
 
 const getChats = async () => {
-  const currentUser = await getCurrentUser();
+  const currentUser: User | null = await getCurrentUser();
   if (!currentUser?.id) {
     return [];
   }
   try {
-    const chats = await prisma.chat.findMany({
+    const chats: Chat[] | null = await prisma.chat.findMany({
       orderBy: {
         lastMessageAt: "desc",
       },
