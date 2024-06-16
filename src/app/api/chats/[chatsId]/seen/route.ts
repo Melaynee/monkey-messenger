@@ -33,6 +33,19 @@ export async function POST(request: Request, { params }: { params: IParams }) {
           include: {
             seen: true,
             sender: true,
+            replyTo: {
+              select: {
+                id: true,
+                body: true,
+                image: true,
+                sender: {
+                  select: {
+                    id: true,
+                    name: true,
+                  },
+                },
+              },
+            },
           },
         },
         users: true,
@@ -55,6 +68,19 @@ export async function POST(request: Request, { params }: { params: IParams }) {
       include: {
         sender: true,
         seen: true,
+        replyTo: {
+          select: {
+            id: true,
+            body: true,
+            image: true,
+            sender: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
       },
       data: {
         seen: {

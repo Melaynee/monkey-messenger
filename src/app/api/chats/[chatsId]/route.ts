@@ -31,6 +31,19 @@ export async function DELETE(
           include: {
             seen: true,
             sender: true,
+            replyTo: {
+              select: {
+                id: true,
+                body: true,
+                image: true,
+                sender: {
+                  select: {
+                    id: true,
+                    name: true,
+                  },
+                },
+              },
+            },
           },
         },
       },

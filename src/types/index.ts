@@ -4,7 +4,15 @@ export type FullMessageType = Message & {
   seen: User[];
   sender: User;
   replyToId: string | null;
-  replyTo?: Message;
+  replyTo: {
+    id: string;
+    body: string | null;
+    image: string | null;
+    sender: {
+      id: string;
+      name: string | null;
+    };
+  } | null;
 };
 
 export type FullChatType = Chat & {

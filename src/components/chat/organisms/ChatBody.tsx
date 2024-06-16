@@ -62,30 +62,17 @@ const ChatBody = ({ initialMessages }: Props) => {
       bottomRef?.current?.scrollIntoView();
     };
 
-    const editMessageHandler = (newMessage: FullMessageType) => {
-      console.log(newMessage);
-      const mappedMessages = (currentMessage: FullMessageType) => {
-        if (currentMessage.id === newMessage.id) {
-          return newMessage;
-        }
-        return currentMessage;
-      };
-
-      setMessages((current) => current?.map(mappedMessages));
-      bottomRef?.current?.scrollIntoView();
-    };
-
     pusherClient.bind("messages:new", messageHandler);
     pusherClient.bind("message:update", updateMessageHandler);
     pusherClient.bind("message:delete", deleteMessageHandler);
-    pusherClient.bind("message:edit", editMessageHandler);
+    pusherClient.bind("message:edit", updateMessageHandler);
 
     return () => {
       pusherClient.unsubscribe(chatId);
       pusherClient.unbind("messages:new", messageHandler);
       pusherClient.unbind("message:update", updateMessageHandler);
       pusherClient.unbind("message:delete", deleteMessageHandler);
-      pusherClient.unbind("message:edit", editMessageHandler);
+      pusherClient.unbind("message:edit", updateMessageHandler);
     };
   }, [chatId]);
 

@@ -61,6 +61,7 @@ const MessageBox = (props: Props) => {
     setEditMessage(props.data);
   }, [props.data, setEditMessage, clearReplyMessage]);
 
+  if (props.data.replyTo) console.log(props.data.replyTo);
   return (
     <div
       className={cn(
@@ -97,10 +98,10 @@ const MessageBox = (props: Props) => {
               >
                 <div className="bg-scene/90 p-1 rounded-lg">
                   <div className="ml-2 pl-2 border-l-2 border-main overflow-hidden max-w-[80%] max-h-16">
-                    <p className="font-medium text-sm ">
-                      {props.data.replyTo.senderId}
+                    <p className="font-medium text-xs text-ellipsis text-nowrap overflow-hidden">
+                      {props.data.replyTo.sender?.name ?? ""}
                     </p>
-                    <p className="text-ellipsis text-sm">
+                    <p className="text-ellipsis font-light text-sm">
                       {props.data.replyTo?.image
                         ? "image"
                         : props.data.replyTo.body}

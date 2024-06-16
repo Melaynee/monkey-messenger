@@ -1,17 +1,30 @@
 import prisma from "@/lib/prismadb";
-import { Message } from "@prisma/client";
+import { FullMessageType } from "@/types";
 
 const getMessages = async (chatId: string) => {
   try {
-    const messages: Message[] | null = await prisma.message.findMany({
+    const messages: FullMessageType[] | null = await prisma.message.findMany({
       where: {
         chatId: chatId,
       },
       include: {
         sender: true,
         seen: true,
-        replyTo: true,
+        replyTo: {
+          select: {
+            id: true,
+            body: true,
+            image: true,
+            sender: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
       },
+
       orderBy: {
         createdAt: "asc",
       },

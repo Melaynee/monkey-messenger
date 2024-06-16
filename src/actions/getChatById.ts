@@ -1,6 +1,6 @@
 import prisma from "@/lib/prismadb";
 import getCurrentUser from "./getCurrentUser";
-import { Chat, User } from "@prisma/client";
+import { User } from "@prisma/client";
 
 const getChatById = async (chatId: string) => {
   try {
@@ -10,7 +10,7 @@ const getChatById = async (chatId: string) => {
       return null;
     }
 
-    const chat: Chat | null = await prisma.chat.findUnique({
+    const chat = await prisma.chat.findUnique({
       where: {
         id: chatId,
       },
