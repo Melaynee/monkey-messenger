@@ -2,9 +2,11 @@ import getCurrentUser from "@/actions/getCurrentUser";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
 import { pusherServer } from "@/lib/pusher";
+import { User } from "@prisma/client";
+import { FullChatType } from "@/types";
 
 interface IParams {
-  chatsId?: string;
+  chatsId: string;
 }
 
 export async function DELETE(
@@ -12,19 +14,25 @@ export async function DELETE(
   { params }: { params: IParams }
 ) {
   try {
-    const chatId = params.chatsId;
-    const currentUser = await getCurrentUser();
+    const chatId: string = params.chatsId;
+    const currentUser: User | null = await getCurrentUser();
 
     if (!currentUser?.id) {
       return new NextResponse("Unathorized", { status: 401 });
     }
 
-    const existingChat = await prisma.chat.findUnique({
+    const existingChat: FullChatType | null = await prisma.chat.findUnique({
       where: {
         id: chatId,
       },
       include: {
         users: true,
+        messages: {
+          include: {
+            seen: true,
+            sender: true,
+          },
+        },
       },
     });
 

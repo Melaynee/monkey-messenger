@@ -2,18 +2,19 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
 import { pusherServer } from "@/lib/pusher";
 import getCurrentUser from "@/actions/getCurrentUser";
+import { Message, User } from "@prisma/client";
 
 export async function DELETE(
   request: Request,
   { params }: { params: { messageId: string } }
 ) {
   try {
-    const currentUser = await getCurrentUser();
+    const currentUser: User | null = await getCurrentUser();
     if (!currentUser?.id || !currentUser?.email)
       return new NextResponse("Unauthorized", { status: 401 });
 
-    const { messageId } = params;
-    const message = await prisma.message.findUnique({
+    const { messageId }: { messageId: string } = params;
+    const message: Message | null = await prisma.message.findUnique({
       where: {
         id: messageId,
       },
@@ -27,7 +28,7 @@ export async function DELETE(
         id: messageId,
       },
     });
-    const chatId = message.chatId;
+    const chatId: string = message.chatId;
 
     await pusherServer.trigger(chatId, "message:delete", deletedMessage);
 

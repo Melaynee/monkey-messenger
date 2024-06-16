@@ -2,10 +2,12 @@ import getCurrentUser from "@/actions/getCurrentUser";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
 import { pusherServer } from "@/lib/pusher";
+import { Chat, User } from "@prisma/client";
+import { NewChatType } from "@/types";
 
 export async function POST(request: Request) {
   try {
-    const currentUser = await getCurrentUser();
+    const currentUser: User | null = await getCurrentUser();
     const body = await request.json();
     const { userId, isGroup, members, name } = body;
 
@@ -18,7 +20,7 @@ export async function POST(request: Request) {
     }
 
     if (isGroup) {
-      const newChat = await prisma.chat.create({
+      const newChat: NewChatType = await prisma.chat.create({
         data: {
           name,
           isGroup,
@@ -35,6 +37,7 @@ export async function POST(request: Request) {
         },
         include: {
           users: true,
+          messages: true,
         },
       });
       newChat.users.forEach((user) => {
@@ -46,7 +49,7 @@ export async function POST(request: Request) {
       return NextResponse.json(newChat);
     }
 
-    const existingChats = await prisma.chat.findMany({
+    const existingChats: NewChatType[] | null = await prisma.chat.findMany({
       where: {
         OR: [
           {
@@ -61,15 +64,19 @@ export async function POST(request: Request) {
           },
         ],
       },
+      include: {
+        users: true,
+        messages: true,
+      },
     });
 
-    const singleChat = existingChats[0];
+    const singleChat: Chat | null = existingChats?.[0];
 
     if (singleChat) {
       return NextResponse.json(singleChat);
     }
 
-    const newChat = await prisma.chat.create({
+    const newChat: NewChatType = await prisma.chat.create({
       data: {
         users: {
           connect: [
@@ -84,6 +91,12 @@ export async function POST(request: Request) {
       },
       include: {
         users: true,
+        messages: {
+          include: {
+            seen: true,
+            sender: true,
+          },
+        },
       },
     });
 

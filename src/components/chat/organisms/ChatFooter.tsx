@@ -53,7 +53,7 @@ const ChatFooter = (props: Props) => {
     }
 
     axios
-      .post("/api/messages", {
+      .post("/api/messages/post", {
         ...data,
         chatId,
         replyMessage,
@@ -65,7 +65,7 @@ const ChatFooter = (props: Props) => {
 
   const handleUpload = (result: any) => {
     axios
-      .post("/api/messages", {
+      .post("/api/messages/post", {
         image: result?.info?.secure_url,
         chatId,
         replyMessage,

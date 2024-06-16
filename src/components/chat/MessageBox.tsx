@@ -41,13 +41,13 @@ const MessageBox = (props: Props) => {
   const handleDelete = useCallback(() => {
     setIsLoading(true);
     axios
-      .delete(`/api/messages/${props.data?.id}/delete`)
+      .delete(`/api/messages/delete/${props.data.id}`)
       .then(() => {})
       .catch(() => toast.error("Something went wrong"))
       .finally(() => {
         setIsLoading(false);
       });
-  }, [props.data?.id]);
+  }, [props.data.id]);
 
   const handleReply = useCallback(() => {
     if (!props.data) return;
