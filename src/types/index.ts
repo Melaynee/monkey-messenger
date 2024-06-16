@@ -24,3 +24,12 @@ export type NewChatType = Chat & {
   users: User[];
   messages: any[];
 };
+
+export type DeleteMessageType = {
+  id: string;
+};
+
+export type DeleteMessageRepliesType = {
+  id: string;
+  replyToId: string | null;
+};

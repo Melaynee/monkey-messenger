@@ -1,12 +1,17 @@
 "use client";
 import useChat from "@/hooks/useChats";
-import { FullMessageType } from "@/types";
+import {
+  DeleteMessageRepliesType,
+  DeleteMessageType,
+  FullMessageType,
+} from "@/types";
 import React, { useEffect, useRef, useState } from "react";
 import MessageBox from "../MessageBox";
 import axios from "axios";
 import { pusherClient } from "@/lib/pusher";
 import { find } from "lodash";
 import toast from "react-hot-toast";
+import { Message } from "@prisma/client";
 
 type Props = { initialMessages?: FullMessageType[] };
 
@@ -51,8 +56,22 @@ const ChatBody = ({ initialMessages }: Props) => {
       setMessages((current) => current?.map(mappedMessages));
       bottomRef?.current?.scrollIntoView();
     };
-    const deleteMessageHandler = (newMessage: FullMessageType) => {
-      const filteredMessages = (message: FullMessageType) => {
+    const updateMessageRepliesHandler = (
+      newMessage: DeleteMessageRepliesType
+    ) => {
+      const mappedMessages = (message: FullMessageType) => {
+        return message.id === newMessage.id
+          ? { ...message, replyToId: newMessage.replyToId }
+          : message;
+      };
+
+      setMessages((current: FullMessageType[] | undefined) =>
+        current?.map(mappedMessages)
+      );
+      bottomRef?.current?.scrollIntoView();
+    };
+    const deleteMessageHandler = (newMessage: DeleteMessageType) => {
+      const filteredMessages = (message: DeleteMessageType) => {
         return message.id !== newMessage.id;
       };
 
@@ -66,6 +85,7 @@ const ChatBody = ({ initialMessages }: Props) => {
     pusherClient.bind("message:update", updateMessageHandler);
     pusherClient.bind("message:delete", deleteMessageHandler);
     pusherClient.bind("message:edit", updateMessageHandler);
+    pusherClient.bind("message:update-replies", updateMessageRepliesHandler);
 
     return () => {
       pusherClient.unsubscribe(chatId);
@@ -73,6 +93,10 @@ const ChatBody = ({ initialMessages }: Props) => {
       pusherClient.unbind("message:update", updateMessageHandler);
       pusherClient.unbind("message:delete", deleteMessageHandler);
       pusherClient.unbind("message:edit", updateMessageHandler);
+      pusherClient.unbind(
+        "message:update-replies",
+        updateMessageRepliesHandler
+      );
     };
   }, [chatId]);
 

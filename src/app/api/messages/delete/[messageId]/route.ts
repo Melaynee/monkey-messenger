@@ -3,6 +3,7 @@ import prisma from "@/lib/prismadb";
 import { pusherServer } from "@/lib/pusher";
 import getCurrentUser from "@/actions/getCurrentUser";
 import { Message, User } from "@prisma/client";
+import { DeleteMessageRepliesType, DeleteMessageType } from "@/types";
 
 export async function DELETE(
   request: Request,
@@ -19,16 +20,40 @@ export async function DELETE(
         id: messageId,
       },
     });
+
     if (!message) {
       return new NextResponse("Message not found", { status: 403 });
     }
 
-    const deletedMessage = await prisma.message.delete({
+    const chatId: string = message.chatId;
+
+    const messagesReplying: DeleteMessageRepliesType[] | null =
+      await prisma.message.findMany({
+        where: {
+          replyToId: message.id,
+        },
+      });
+
+    if (messagesReplying) {
+      for (const message of messagesReplying) {
+        await prisma.message.update({
+          where: {
+            id: message.id,
+          },
+          data: {
+            replyToId: null,
+          },
+        });
+
+        await pusherServer.trigger(chatId, "message:update-replies", message);
+      }
+    }
+
+    const deletedMessage: DeleteMessageType = await prisma.message.delete({
       where: {
         id: messageId,
       },
     });
-    const chatId: string = message.chatId;
 
     await pusherServer.trigger(chatId, "message:delete", deletedMessage);
 
