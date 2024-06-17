@@ -69,33 +69,32 @@ const ProfileDrawer: React.FC<DrawerProps> = (props) => {
                   <DialogPanel
                     className={"pointer-events-auto w-screen max-w-md"}
                   >
-                    <div
-                      className="
-                        flex
-                        h-full
-                        flex-col
-                        overflow-y-scroll
-                        bg-white
-                        py-4
-                        shadow-xl
-                      "
-                    >
-                      <ProfileDrawerHeader
-                        onClose={props.onClose}
-                        isGroup={props.data.isGroup ?? false}
-                        setIsAddContactsOpen={() => setIsAddContactsOpen(true)}
-                      />
-                      <ProfileDrawerAvatar
-                        chat={props.data}
-                        user={otherUser}
-                        statusText={props.statusText}
-                        title={title}
-                      />
-                      <ProfileDrawerInfo
-                        isGroup={props.data.isGroup ?? false}
-                        user={otherUser}
-                        joinedDate={joinedDate}
-                      />
+                    <div className="grid grid-rows-12 grid-cols-1 h-full bg-white py-4 shadow-xl ">
+                      <div className="row-span-1">
+                        <ProfileDrawerHeader
+                          onClose={props.onClose}
+                          isGroup={props.data.isGroup ?? false}
+                          setIsAddContactsOpen={() =>
+                            setIsAddContactsOpen(true)
+                          }
+                        />
+                      </div>
+                      <div className="overflow-hidden row-start-2 row-end-9">
+                        <ProfileDrawerAvatar
+                          chat={props.data}
+                          user={otherUser}
+                          statusText={props.statusText}
+                          title={title}
+                        />
+                      </div>
+                      <div className="overflow-y-scroll h-full row-span-5">
+                        <ProfileDrawerInfo
+                          isGroup={props.data.isGroup ?? false}
+                          user={otherUser}
+                          users={props.data.users}
+                          joinedDate={joinedDate}
+                        />
+                      </div>
                     </div>
                   </DialogPanel>
                 </TransitionChild>

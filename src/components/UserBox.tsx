@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 type Props = {
   user: User;
-  handleClick: (user: User) => void;
+  handleClick?: (user: User) => void;
   showMessage?: boolean;
   selected?: boolean;
 };

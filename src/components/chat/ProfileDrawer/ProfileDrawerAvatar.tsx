@@ -22,7 +22,7 @@ const ProfileDrawerAvatar = (props: Props) => {
   const imageSrc = props.user?.image ?? "/img/avatar.jpeg";
 
   return (
-    <div className="relative">
+    <div className="relative h-full">
       {props.chat?.isGroup ? (
         <Carousel>
           <CarouselContent>

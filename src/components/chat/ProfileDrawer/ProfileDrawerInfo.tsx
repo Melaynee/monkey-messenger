@@ -12,11 +12,13 @@ import RemoveChatModal from "../RemoveChatModal";
 import useChat from "@/hooks/useChats";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import UserBox from "@/components/UserBox";
 
 type Props = {
   user: User;
   isGroup?: boolean;
   joinedDate: string;
+  users: User[];
 };
 
 const ProfileDrawerInfo = (props: Props) => {
@@ -47,7 +49,7 @@ const ProfileDrawerInfo = (props: Props) => {
           />
         </Modal>
       )}
-      <div className="relative h-full  w-full">
+      <div className="flex flex-col h-full w-full">
         {!props.isGroup && (
           <div className="py-2 px-3 flex flex-col gap-3">
             <div className="flex items-center gap-3">
@@ -67,7 +69,13 @@ const ProfileDrawerInfo = (props: Props) => {
           </div>
         )}
 
-        <div className="absolute bottom-0 left-5 right-5">
+        {props.users.map((user) => (
+          <>
+            <UserBox key={user.id} user={user} />
+          </>
+        ))}
+
+        <div className="mt-auto">
           <Button
             type="button"
             onClick={() => setIsOpenModal(true)}
