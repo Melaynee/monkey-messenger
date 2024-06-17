@@ -20,6 +20,7 @@ interface DrawerProps {
     users: User[];
   };
   statusText?: string;
+  currentUser: User | null;
 }
 
 const ProfileDrawer: React.FC<DrawerProps> = (props) => {
@@ -92,7 +93,9 @@ const ProfileDrawer: React.FC<DrawerProps> = (props) => {
                           isGroup={props.data.isGroup ?? false}
                           user={otherUser}
                           users={props.data.users}
+                          owner={props.data.owner}
                           joinedDate={joinedDate}
+                          currentUser={props.currentUser}
                         />
                       </div>
                     </div>

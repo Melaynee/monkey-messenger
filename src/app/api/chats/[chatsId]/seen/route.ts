@@ -57,7 +57,7 @@ export async function POST(request: Request, { params }: { params: IParams }) {
     }
 
     const lastMessage: FullMessageType | null =
-      chat.messages[chat.messages.length - 1];
+      chat.messages![chat.messages!.length - 1];
 
     if (!lastMessage) return NextResponse.json(chat);
 

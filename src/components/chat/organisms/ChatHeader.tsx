@@ -16,6 +16,7 @@ interface Props {
   chat: Chat & {
     users: User[];
   };
+  currentUser: User | null;
 }
 
 const Header = (props: Props) => {
@@ -54,6 +55,7 @@ const Header = (props: Props) => {
         onClose={() => setIsDrawOpen(false)}
         data={props.chat}
         statusText={statusText}
+        currentUser={props.currentUser}
       />
       <div className="w-full flex gap-6 justify-start items-center px-2 md:px-4 lg:px-6 py-2 bg-main h-16 rounded-b-sm">
         <div

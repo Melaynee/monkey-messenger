@@ -62,11 +62,12 @@ export async function DELETE(
       },
     });
 
-    existingChat.users.forEach((user) => {
-      if (user.email) {
-        pusherServer.trigger(user.email, "chat:remove", existingChat);
-      }
-    });
+    if (existingChat.users)
+      existingChat.users.forEach((user) => {
+        if (user.email) {
+          pusherServer.trigger(user.email, "chat:remove", existingChat);
+        }
+      });
 
     return NextResponse.json(deletedChat);
   } catch (error) {

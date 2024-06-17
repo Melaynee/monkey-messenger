@@ -34,6 +34,7 @@ export async function POST(request: Request) {
               },
             ],
           },
+          owner: currentUser.id,
         },
         include: {
           users: true,

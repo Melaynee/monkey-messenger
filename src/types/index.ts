@@ -16,13 +16,13 @@ export type FullMessageType = Message & {
 };
 
 export type FullChatType = Chat & {
-  users: User[];
-  messages: FullMessageType[];
+  users?: User[];
+  messages?: FullMessageType[];
 };
 
 export type NewChatType = Chat & {
   users: User[];
-  messages: any[];
+  messages?: any[];
 };
 
 export type DeleteMessageType = {

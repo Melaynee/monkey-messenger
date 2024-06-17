@@ -58,6 +58,7 @@ model Chat {
   lastMessageAt DateTime @default(now())
   name          String?
   isGroup       Boolean?
+  owner         String? @db.ObjectId
 
   messageIds String[]  @db.ObjectId
   messages   Message[]
