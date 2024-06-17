@@ -11,7 +11,6 @@ import axios from "axios";
 import { pusherClient } from "@/lib/pusher";
 import { find } from "lodash";
 import toast from "react-hot-toast";
-import { Message } from "@prisma/client";
 
 type Props = { initialMessages?: FullMessageType[] };
 
@@ -29,74 +28,58 @@ const ChatBody = ({ initialMessages }: Props) => {
   }, [chatId]);
 
   useEffect(() => {
-    pusherClient.subscribe(chatId);
-    bottomRef?.current?.scrollIntoView();
-
     const messageHandler = (message: FullMessageType) => {
-      axios.post(`/api/chats/${chatId}/seen`);
-
       setMessages((current) => {
-        if (find(current, { id: message.id })) {
-          return current;
-        }
+        if (find(current, { id: message.id })) return current;
         return [...current!, message];
       });
-
-      bottomRef?.current?.scrollIntoView();
     };
 
     const updateMessageHandler = (newMessage: FullMessageType) => {
-      const mappedMessages = (currentMessage: FullMessageType) => {
-        if (currentMessage.id === newMessage.id) {
-          return newMessage;
-        }
-        return currentMessage;
-      };
-
+      const mappedMessages = (message: FullMessageType) =>
+        message.id === newMessage.id ? newMessage : message;
       setMessages((current) => current?.map(mappedMessages));
-      bottomRef?.current?.scrollIntoView();
     };
+
     const updateMessageRepliesHandler = (
       newMessage: DeleteMessageRepliesType
     ) => {
-      const mappedMessages = (message: FullMessageType) => {
-        return message.id === newMessage.id
+      const mappedMessages = (message: FullMessageType) =>
+        message.id === newMessage.id
           ? { ...message, replyToId: newMessage.replyToId }
           : message;
-      };
-
-      setMessages((current: FullMessageType[] | undefined) =>
-        current?.map(mappedMessages)
-      );
-      bottomRef?.current?.scrollIntoView();
-    };
-    const deleteMessageHandler = (newMessage: DeleteMessageType) => {
-      const filteredMessages = (message: DeleteMessageType) => {
-        return message.id !== newMessage.id;
-      };
-
-      setMessages((current) => {
-        return current?.filter(filteredMessages);
+      setMessages((currentMessages) => {
+        const updatedMessages = currentMessages?.map(mappedMessages);
+        return updatedMessages;
       });
-      bottomRef?.current?.scrollIntoView();
     };
 
-    pusherClient.bind("messages:new", messageHandler);
-    pusherClient.bind("message:update", updateMessageHandler);
-    pusherClient.bind("message:delete", deleteMessageHandler);
-    pusherClient.bind("message:edit", updateMessageHandler);
-    pusherClient.bind("message:update-replies", updateMessageRepliesHandler);
+    const deleteMessageHandler = (newMessage: DeleteMessageType) => {
+      const filteredMessages = (message: DeleteMessageType) =>
+        message.id !== newMessage.id;
+      setMessages((current) => current?.filter(filteredMessages));
+    };
+
+    const handlers = {
+      "messages:new": messageHandler,
+      "message:update": updateMessageHandler,
+      "message:delete": deleteMessageHandler,
+      "message:edit": updateMessageHandler,
+      "message:update-replies": updateMessageRepliesHandler,
+    };
+
+    Object.entries(handlers).forEach(([event, handler]) => {
+      pusherClient.bind(event, handler);
+    });
+
+    pusherClient.subscribe(chatId);
+    bottomRef?.current?.scrollIntoView();
 
     return () => {
       pusherClient.unsubscribe(chatId);
-      pusherClient.unbind("messages:new", messageHandler);
-      pusherClient.unbind("message:update", updateMessageHandler);
-      pusherClient.unbind("message:delete", deleteMessageHandler);
-      pusherClient.unbind("message:edit", updateMessageHandler);
-      pusherClient.unbind(
-        "message:update-replies",
-        updateMessageRepliesHandler
-      );
+      Object.entries(handlers).forEach(([event, handler]) => {
+        pusherClient.unbind(event, handler);
+      });
     };
   }, [chatId]);
 
@@ -109,7 +92,7 @@ const ChatBody = ({ initialMessages }: Props) => {
           data={message}
         />
       ))}
-      <div ref={bottomRef} className="pt-24" />
+      <div ref={bottomRef} className="pt-8" />
     </div>
   );
 };
