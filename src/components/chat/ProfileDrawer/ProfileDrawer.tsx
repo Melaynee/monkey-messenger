@@ -12,6 +12,7 @@ import AddContact from "../AddContact";
 import ProfileDrawerHeader from "./ProfileDrawerHeader";
 import ProfileDrawerAvatar from "./ProfileDrawerAvatar";
 import ProfileDrawerInfo from "./ProfileDrawerInfo";
+import AddUserToGroupModal from "../GroupChat/AddUserToGroupModal";
 
 interface DrawerProps {
   isOpen?: boolean;
@@ -25,6 +26,8 @@ interface DrawerProps {
 
 const ProfileDrawer: React.FC<DrawerProps> = (props) => {
   const [isAddContactsOpen, setIsAddContactsOpen] = useState<boolean>(false);
+  const [isAddUserToGroupOpen, setIsAddUserToGroupOpen] =
+    useState<boolean>(false);
   const otherUser = useOtherUser(props.data);
 
   const joinedDate = useMemo(() => {
@@ -41,6 +44,10 @@ const ProfileDrawer: React.FC<DrawerProps> = (props) => {
         data={otherUser}
         isOpen={isAddContactsOpen}
         onClose={() => setIsAddContactsOpen(false)}
+      />
+      <AddUserToGroupModal
+        isOpen={isAddUserToGroupOpen}
+        onClose={() => setIsAddUserToGroupOpen(false)}
       />
       <Transition show={props.isOpen} as={Fragment}>
         <Dialog onClose={props.onClose} as="div">
@@ -78,6 +85,9 @@ const ProfileDrawer: React.FC<DrawerProps> = (props) => {
                           setIsAddContactsOpen={() =>
                             setIsAddContactsOpen(true)
                           }
+                          setIsAddUserToGroupOpen={() =>
+                            setIsAddUserToGroupOpen(true)
+                          }
                         />
                       </div>
                       <div className="overflow-hidden row-start-2 row-end-9">
@@ -88,7 +98,7 @@ const ProfileDrawer: React.FC<DrawerProps> = (props) => {
                           title={title}
                         />
                       </div>
-                      <div className="overflow-y-scroll h-full row-span-5">
+                      <div className="overflow-y-auto h-full row-span-5">
                         <ProfileDrawerInfo
                           isGroup={props.data.isGroup ?? false}
                           user={otherUser}

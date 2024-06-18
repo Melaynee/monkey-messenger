@@ -1,10 +1,12 @@
 import React from "react";
 import { IoClose } from "react-icons/io5";
+import { MdOutlineGroupAdd } from "react-icons/md";
 import { RiContactsBookLine } from "react-icons/ri";
 
 type Props = {
   onClose: () => void;
   setIsAddContactsOpen: () => void;
+  setIsAddUserToGroupOpen: () => void;
   isGroup?: boolean;
 };
 
@@ -22,7 +24,14 @@ const ProfileDrawerHeader = (props: Props) => {
           {props.isGroup ? "Group Info" : "User Info"}
         </h3>
       </div>
-      {!props.isGroup && (
+      {props.isGroup ? (
+        <button
+          onClick={props.setIsAddUserToGroupOpen}
+          className="rounded-full cursor-pointer hover:bg-light text-dark/70 transition-colors duration-300"
+        >
+          <MdOutlineGroupAdd size={26} />
+        </button>
+      ) : (
         <button
           className="rounded-full cursor-pointer hover:bg-light text-dark/70 transition-colors duration-300"
           onClick={props.setIsAddContactsOpen}

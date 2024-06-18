@@ -76,7 +76,7 @@ const ChatList: React.FC<Props> = ({ initialItems, users }) => {
   const { searchQuery } = useSearchStore();
   const filteredChats = items.filter((current: FullChatType) => {
     if (!current.name) {
-      const user = current.users.find(
+      const user = current.users?.find(
         (user) => user.email != session.data?.user?.email
       );
       if (user?.name)
