@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
 import { pusherServer } from "@/lib/pusher";
 import { User } from "@prisma/client";
-import { FullChatType } from "@/types";
 
 interface IParams {
   chatsId: string;
@@ -21,29 +20,26 @@ export async function DELETE(
       return new NextResponse("Unathorized", { status: 401 });
     }
 
-    const existingChat: FullChatType | null = await prisma.chat.findUnique({
+    const existingChat: {
+      id: string;
+      messages: { id: string }[];
+      users: { id: string; email: string | null; name: string | null }[];
+    } | null = await prisma.chat.findUnique({
       where: {
         id: chatId,
       },
-      include: {
-        users: true,
+      select: {
+        id: true,
         messages: {
-          include: {
-            seen: true,
-            sender: true,
-            replyTo: {
-              select: {
-                id: true,
-                body: true,
-                image: true,
-                sender: {
-                  select: {
-                    id: true,
-                    name: true,
-                  },
-                },
-              },
-            },
+          select: {
+            id: true,
+          },
+        },
+        users: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
           },
         },
       },

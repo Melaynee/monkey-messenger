@@ -26,7 +26,7 @@ const Header = (props: Props) => {
 
   const { members } = useActiveList();
 
-  const isActive = members.indexOf(otherUser.email!) !== -1;
+  const isActive = otherUser && members.indexOf(otherUser.email!) !== -1;
 
   const router = useRouter();
 
