@@ -44,14 +44,18 @@ const ChatDropdownMenu = (props: Props) => {
   }, [chatId, router]);
   return (
     <>
-      {isOpenModal && (
-        <Modal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)}>
-          <RemoveChatModal
-            onClose={() => setIsOpenModal(false)}
-            handleClick={onDelete}
-          ></RemoveChatModal>
-        </Modal>
-      )}
+      {
+        {
+          /* TODO state management */
+        }
+      }
+      <Modal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)}>
+        <RemoveChatModal
+          onClose={() => setIsOpenModal(false)}
+          handleClick={onDelete}
+        ></RemoveChatModal>
+      </Modal>
+
       <DropdownMenu>
         <DropdownMenuTrigger className="focus:outline-none flex items-center">
           <HiDotsVertical size={20} className="text-[#fff]" />

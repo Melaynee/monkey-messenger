@@ -3,22 +3,17 @@ import useRoutes from "@/hooks/useRoutes";
 import { cn } from "@/lib/utils";
 import { User } from "@prisma/client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import AvatarComponent from "../Avatar";
-import SettingsModal from "../settings/SettingsModal";
+import { useSettingsModalStore } from "@/hooks/useModalStore";
 
 type Props = { currentUser: User };
 
 const Footer = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
   const routes = useRoutes();
+  const { onOpen } = useSettingsModalStore();
   return (
-    <>
-      <SettingsModal
-        currentUser={props.currentUser}
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-      />
+    
       <div className="bg-[#fff] p-4 block lg:hidden ">
         <div className="flex justify-around items-center w-1/2 mx-auto">
           {routes.map((route) => (
@@ -34,12 +29,12 @@ const Footer = (props: Props) => {
               {<route.icon size={44} />}
             </Link>
           ))}
-          <div onClick={() => setIsOpen(true)}>
+          <div onClick={onOpen}>
             <AvatarComponent user={props.currentUser} />
           </div>
         </div>
       </div>
-    </>
+    
   );
 };
 

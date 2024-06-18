@@ -11,12 +11,14 @@ import Input from "../inputs/input";
 import Image from "next/image";
 import { CldUploadButton } from "next-cloudinary";
 import Button from "../buttons/Button";
+import { useSettingsModalStore } from "@/hooks/useModalStore";
 
-type Props = { isOpen?: boolean; onClose: () => void; currentUser: User };
+type Props = { currentUser: User };
 
 const SettingsModal = (props: Props) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const { isOpen, onClose } = useSettingsModalStore();
 
   const {
     register,
@@ -44,13 +46,13 @@ const SettingsModal = (props: Props) => {
       .post("/api/settings", data)
       .then(() => {
         router.refresh();
-        props.onClose();
+        onClose();
       })
       .catch(() => toast.error("Something went wrong..."))
       .finally(() => setIsLoading(false));
   };
   return (
-    <Modal isOpen={props.isOpen} onClose={props.onClose}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="border-b border-dark/30 pb-12">
           <h2 className="text-dark font-semibold tracking-wider">Profile</h2>
@@ -96,7 +98,7 @@ const SettingsModal = (props: Props) => {
             disabled={isLoading}
             type="button"
             secondary
-            onClick={props.onClose}
+            onClick={onClose}
           >
             Cancel
           </Button>

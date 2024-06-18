@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,67 +14,60 @@ import { User } from "@prisma/client";
 import AvatarComponent from "./Avatar";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import SettingsModal from "./settings/SettingsModal";
+import { useSettingsModalStore } from "@/hooks/useModalStore";
 
 type Props = { currentUser: User };
 
 const BurgerComponent = (props: Props) => {
   const routes = useRoutes();
   const currentPath = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+  const { onOpen } = useSettingsModalStore();
 
   return (
-    <>
-      <SettingsModal
-        currentUser={props.currentUser}
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-      />
-      <div className="">
-        <DropdownMenu>
-          <DropdownMenuTrigger className="focus:outline-none flex items-center">
-            <div className="flex flex-col gap-1">
-              <div className="w-6 h-1 rounded-full bg-dark  "></div>
-              <div className="w-6 h-1 rounded-full bg-dark  "></div>
-              <div className="w-6 h-1 rounded-full bg-dark  "></div>
+    <div className="">
+      <DropdownMenu>
+        <DropdownMenuTrigger className="focus:outline-none flex items-center">
+          <div className="flex flex-col gap-1">
+            <div className="w-6 h-1 rounded-full bg-dark  "></div>
+            <div className="w-6 h-1 rounded-full bg-dark  "></div>
+            <div className="w-6 h-1 rounded-full bg-dark  "></div>
+          </div>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>
+            <div
+              onClick={onOpen}
+              className="w-full flex gap-2 bg-transparent cursor-pointer text-dark "
+            >
+              <AvatarComponent size={20} user={props.currentUser} />
+              {props.currentUser?.name}
             </div>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>
-              <div
-                onClick={() => setIsOpen(true)}
-                className="w-full flex gap-2 bg-transparent cursor-pointer text-dark "
-              >
-                <AvatarComponent size={20} user={props.currentUser} />
-                {props.currentUser?.name}
-              </div>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
 
-            {routes.map((route) => (
-              <DropdownMenuItem
-                key={route.label}
-                disabled={currentPath === route.href}
-                className={cn(
-                  "hover:bg-main",
-                  currentPath === route.href && "bg-main text-light "
-                )}
+          {routes.map((route) => (
+            <DropdownMenuItem
+              key={route.label}
+              disabled={currentPath === route.href}
+              className={cn(
+                "hover:bg-main",
+                currentPath === route.href && "bg-main text-light "
+              )}
+            >
+              <Link
+                className={cn("flex gap-2 items-center cursor-pointer ")}
+                href={route.href}
+                aria-disabled={currentPath === route.href}
+                onClick={route?.onClick}
               >
-                <Link
-                  className={cn("flex gap-2 items-center cursor-pointer ")}
-                  href={route.href}
-                  aria-disabled={currentPath === route.href}
-                  onClick={route?.onClick}
-                >
-                  {<route.icon />}
-                  {route.label}
-                </Link>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-    </>
+                {<route.icon />}
+                {route.label}
+              </Link>
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   );
 };
 
