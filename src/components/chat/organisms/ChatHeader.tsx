@@ -11,6 +11,7 @@ import AddContact from "../AddContact";
 import { useRouter } from "next/navigation";
 import AvatarGroup from "../GroupChat/AvatarGroup";
 import useActiveList from "@/hooks/useActiveList";
+import AddUserToGroupModal from "../GroupChat/AddUserToGroupModal";
 
 interface Props {
   chat: Chat & {
@@ -45,6 +46,7 @@ const Header = (props: Props) => {
 
   return (
     <>
+      <AddUserToGroupModal />
       <AddContact
         data={otherUser}
         isOpen={isAddContactsOpen}

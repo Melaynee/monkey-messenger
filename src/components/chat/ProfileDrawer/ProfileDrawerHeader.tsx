@@ -1,3 +1,7 @@
+import {
+  useAddContactModalStore,
+  useAddUserToGroupModalStore,
+} from "@/hooks/useModalStore";
 import React from "react";
 import { IoClose } from "react-icons/io5";
 import { MdOutlineGroupAdd } from "react-icons/md";
@@ -5,12 +9,12 @@ import { RiContactsBookLine } from "react-icons/ri";
 
 type Props = {
   onClose: () => void;
-  setIsAddContactsOpen: () => void;
-  setIsAddUserToGroupOpen: () => void;
   isGroup?: boolean;
 };
 
 const ProfileDrawerHeader = (props: Props) => {
+  const openAddToGroup = useAddUserToGroupModalStore().onOpen;
+  const openAddContact = useAddContactModalStore().onOpen;
   return (
     <div className="flex items-center justify-between px-2 pb-4">
       <div className="flex items-center gap-3">
@@ -26,7 +30,7 @@ const ProfileDrawerHeader = (props: Props) => {
       </div>
       {props.isGroup ? (
         <button
-          onClick={props.setIsAddUserToGroupOpen}
+          onClick={openAddToGroup}
           className="rounded-full cursor-pointer hover:bg-light text-dark/70 transition-colors duration-300"
         >
           <MdOutlineGroupAdd size={26} />
@@ -34,7 +38,7 @@ const ProfileDrawerHeader = (props: Props) => {
       ) : (
         <button
           className="rounded-full cursor-pointer hover:bg-light text-dark/70 transition-colors duration-300"
-          onClick={props.setIsAddContactsOpen}
+          onClick={openAddContact}
         >
           <RiContactsBookLine size={26} />
         </button>
