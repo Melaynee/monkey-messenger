@@ -16,18 +16,21 @@ import axios from "axios";
 import useChat from "@/hooks/useChats";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import Modal from "../Modal";
 import RemoveChatModal from "./RemoveChatModal";
+import {
+  useAddContactModalStore,
+  useDeleteChatModalStore,
+} from "@/hooks/useModalStore";
 
 type Props = {
-  setIsAddContactsOpen: () => void;
   isGroup?: boolean;
 };
 
 const ChatDropdownMenu = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [isOpenModal, setIsOpenModal] = useState(false);
   const router = useRouter();
+  const { onOpen, onClose } = useDeleteChatModalStore();
+  const onContactsOpen = useAddContactModalStore().onOpen;
 
   const { chatId } = useChat();
   const onDelete = useCallback(() => {
@@ -35,26 +38,19 @@ const ChatDropdownMenu = (props: Props) => {
     axios
       .delete(`/api/chats/${chatId}`)
       .then(() => {
-        setIsOpenModal(false);
         router.push("/chats");
         router.refresh();
       })
       .catch(() => toast.error("Something went wrong..."))
-      .finally(() => setIsLoading(false));
-  }, [chatId, router]);
+      .finally(() => {
+        onClose();
+        setIsLoading(false);
+      });
+  }, [chatId, router, onClose]);
+
   return (
     <>
-      {
-        {
-          /* TODO state management */
-        }
-      }
-      <Modal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)}>
-        <RemoveChatModal
-          onClose={() => setIsOpenModal(false)}
-          handleClick={onDelete}
-        ></RemoveChatModal>
-      </Modal>
+      <RemoveChatModal handleClick={onDelete} />
 
       <DropdownMenu>
         <DropdownMenuTrigger className="focus:outline-none flex items-center">
@@ -66,7 +62,7 @@ const ChatDropdownMenu = (props: Props) => {
               "flex gap-2 cursor-pointer",
               props.isGroup && "hidden"
             )}
-            onClick={props.setIsAddContactsOpen}
+            onClick={onContactsOpen}
           >
             <RiContactsBookLine size={20} /> Add contact
           </DropdownMenuItem>
@@ -89,7 +85,7 @@ const ChatDropdownMenu = (props: Props) => {
           {!props.isGroup && (
             <DropdownMenuItem
               className="flex gap-2 text-red-600 hover:text-red-400 cursor-pointer transition-colors duration-300"
-              onClick={() => setIsOpenModal(true)}
+              onClick={onOpen}
             >
               <MdDeleteOutline size={20} /> Delete chat{" "}
             </DropdownMenuItem>

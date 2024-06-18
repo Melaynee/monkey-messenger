@@ -23,7 +23,6 @@ interface Props {
 const Header = (props: Props) => {
   const otherUser = useOtherUser(props.chat);
   const [isDrawOpen, setIsDrawOpen] = useState(false);
-  const [isAddContactsOpen, setIsAddContactsOpen] = useState(false);
 
   const { members } = useActiveList();
 
@@ -47,11 +46,7 @@ const Header = (props: Props) => {
   return (
     <>
       <AddUserToGroupModal />
-      <AddContact
-        data={otherUser}
-        isOpen={isAddContactsOpen}
-        onClose={() => setIsAddContactsOpen(false)}
-      />
+      <AddContact data={otherUser} />
       <ProfileDrawer
         isOpen={isDrawOpen}
         onClose={() => setIsDrawOpen(false)}
@@ -83,10 +78,7 @@ const Header = (props: Props) => {
           </div>
           <div className="flex">
             <div className="">
-              <ChatDropdownMenu
-                isGroup={props.chat.isGroup ?? false}
-                setIsAddContactsOpen={() => setIsAddContactsOpen(true)}
-              />
+              <ChatDropdownMenu isGroup={props.chat.isGroup ?? false} />
             </div>
           </div>
         </div>

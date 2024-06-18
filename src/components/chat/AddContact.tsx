@@ -19,19 +19,18 @@ import {
 } from "../ui/dialog";
 import useMediaQuery from "@custom-react-hooks/use-media-query";
 import ProfileForm from "./ProfileForm";
+import { useAddContactModalStore } from "@/hooks/useModalStore";
 
 type Props = {
   data: User;
-  isOpen: boolean;
-  onClose: () => void;
 };
 
 const AddContact = (props: Props) => {
   const isDesktop = useMediaQuery("(min-width: 768px)");
-
+  const { isOpen, onClose } = useAddContactModalStore();
   if (isDesktop) {
     return (
-      <Dialog open={props.isOpen} onOpenChange={props.onClose}>
+      <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle className="text-hover">Add contact</DialogTitle>
@@ -48,7 +47,7 @@ const AddContact = (props: Props) => {
   }
 
   return (
-    <Drawer open={props.isOpen}>
+    <Drawer open={isOpen}>
       <DrawerContent>
         <DrawerHeader className="text-left">
           <DrawerTitle className="text-hover">Add contact</DrawerTitle>
@@ -61,7 +60,7 @@ const AddContact = (props: Props) => {
         <ProfileForm user={props.data} className="px-4" />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
-            <Button type="button" fullWidth onClick={props.onClose}>
+            <Button type="button" fullWidth onClick={onClose}>
               Cancel
             </Button>
           </DrawerClose>

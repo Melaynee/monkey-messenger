@@ -11,13 +11,14 @@ import { pusherClient } from "@/lib/pusher";
 import { find, includes } from "lodash";
 import { useRouter } from "next/navigation";
 import useSearchStore from "@/hooks/useSearchStore";
+import { useGroupModalStore } from "@/hooks/useModalStore";
 
 type Props = { initialItems: FullChatType[]; users: User[] };
 
 const ChatList: React.FC<Props> = ({ initialItems, users }) => {
   const session = useSession();
   const [items, setItems] = useState(initialItems);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { onOpen } = useGroupModalStore();
   const { chatId } = useChat();
   const router = useRouter();
 
@@ -87,16 +88,12 @@ const ChatList: React.FC<Props> = ({ initialItems, users }) => {
   });
   return (
     <>
-      <GroupChatModal
-        users={users}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+      <GroupChatModal users={users} />
       <aside className="w-full">
         <div className="flex justify-between mb-4 px-4">
           <div className="text-2xl font-bold text-dark">Messages</div>
           <div
-            onClick={() => setIsModalOpen(true)}
+            onClick={onOpen}
             className="rounded-full p-2 bg-light text-gray-600 cursor-pointer hover:opacity-75 transition"
           >
             <MdOutlineGroupAdd size={20} />
