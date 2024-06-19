@@ -3,7 +3,6 @@ import { FullMessageType } from "@/types";
 import { User } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import React, { useCallback, useState } from "react";
-import AvatarComponent from "../Avatar";
 import { format } from "date-fns";
 import Image from "next/image";
 import ImageModal from "./ImageModal";
@@ -19,6 +18,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import useReplyStore from "@/hooks/useReplyStore";
 import useEditStore from "@/hooks/useEditStore";
+import AvatarComponent from "../users/Avatar";
 
 type Props = {
   isLast?: boolean;

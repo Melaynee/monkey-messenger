@@ -1,7 +1,7 @@
 import Searchbar from "@/components/Searchbar";
 import React from "react";
 import { User } from "@prisma/client";
-import BurgerComponent from "../burger";
+import BurgerComponent from "../ui/burger";
 
 type Props = { currentUser: User; children: React.ReactNode };
 

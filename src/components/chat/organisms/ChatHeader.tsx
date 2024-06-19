@@ -1,7 +1,5 @@
 "use client";
 import { Chat, User } from "@prisma/client";
-import AvatarComponent from "../../Avatar";
-import UserItem from "../../UserItem";
 import ChatDropdownMenu from "../ChatDropdownMenu";
 import useOtherUser from "@/hooks/useOtherUser";
 import { useCallback, useMemo, useState } from "react";
@@ -16,6 +14,8 @@ import LeaveChatModal from "../LeaveChatModal";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useLeavingModalStore } from "@/hooks/useModalStore";
+import AvatarComponent from "@/components/users/Avatar";
+import UserItem from "@/components/users/UserItem";
 
 interface Props {
   chat: Chat & {

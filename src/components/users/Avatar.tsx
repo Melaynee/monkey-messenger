@@ -2,8 +2,8 @@ import { cn } from "@/lib/utils";
 import { User } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
-import OnlineIcon from "./OnlineIcon";
 import useActiveList from "@/hooks/useActiveList";
+import OnlineIcon from "./OnlineIcon";
 
 type Props = { user?: User; size?: number };
 

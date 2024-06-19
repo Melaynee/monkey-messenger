@@ -4,9 +4,9 @@ import { User } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import UserBox from "./UserBox";
-import Loader from "./Loader";
 import useSearchStore from "@/hooks/useSearchStore";
 import { includes } from "lodash";
+import { Loader } from "lucide-react";
 
 type Props = { users: User[] };
 

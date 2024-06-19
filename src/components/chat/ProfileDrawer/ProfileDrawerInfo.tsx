@@ -10,10 +10,10 @@ import axios from "axios";
 import useChat from "@/hooks/useChats";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import UserBox from "@/components/UserBox";
 import { IoClose } from "react-icons/io5";
 import { useDeleteChatModalStore } from "@/hooks/useModalStore";
 import Loader from "@/components/Loader";
+import UserBox from "@/components/users/UserBox";
 
 type Props = {
   user: User;

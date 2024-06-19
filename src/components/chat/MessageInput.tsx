@@ -1,7 +1,5 @@
-import useEditStore from "@/hooks/useEditStore";
 import { cn } from "@/lib/utils";
-import { FullMessageType } from "@/types";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 
 type Props = {

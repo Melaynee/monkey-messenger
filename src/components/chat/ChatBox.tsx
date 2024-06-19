@@ -5,9 +5,9 @@ import { useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import { FullChatType } from "@/types";
 import useOtherUser from "@/hooks/useOtherUser";
-import AvatarComponent from "../Avatar";
 import LastMessageTime from "./LastMessageTime";
 import AvatarGroup from "./GroupChat/AvatarGroup";
+import AvatarComponent from "../users/Avatar";
 
 type ChatBoxProps = {
   data: FullChatType;
@@ -69,7 +69,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ data, selected }: ChatBoxProps) => {
       )}
     >
       {data.isGroup ? (
-        <AvatarGroup users={data.users} />
+        <AvatarGroup users={data.users!} />
       ) : (
         <AvatarComponent user={otherUser} />
       )}
