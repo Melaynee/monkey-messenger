@@ -12,9 +12,9 @@ export async function POST(
     const currentUser: User | null = await getCurrentUser();
     const chatId: string = params.chatsId;
     const body = await request.json();
-    const { userId } = body;
+    const { members } = body;
 
-    if (!currentUser?.id) {
+    if (!currentUser?.id || !currentUser?.email) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
@@ -22,20 +22,13 @@ export async function POST(
       where: {
         id: chatId,
       },
-    });
-
-    if (chat?.owner !== currentUser?.id) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-
-    const user = await prisma.user.findUnique({
-      where: {
-        id: userId,
+      include: {
+        users: true,
       },
     });
 
-    if (!user) {
-      return new NextResponse("User not found", { status: 404 });
+    if (!chat) {
+      return new NextResponse("Invalid chat ID", { status: 400 });
     }
 
     const updatedChat = await prisma.chat.update({
@@ -44,19 +37,27 @@ export async function POST(
       },
       data: {
         users: {
-          connect: {
-            id: user.id,
-          },
+          connect: [
+            ...members.map((member: { value: string }) => ({
+              id: member.value,
+            })),
+          ],
         },
       },
       include: {
         users: true,
+        messages: {
+          include: {
+            seen: true,
+            sender: true,
+          },
+        },
       },
     });
 
     updatedChat.users.forEach((user) => {
       if (user.email) {
-        pusherServer.trigger(user.email, "chat:update", { id: chatId });
+        pusherServer.trigger(user.email, "chat:new", updatedChat);
       }
     });
 
