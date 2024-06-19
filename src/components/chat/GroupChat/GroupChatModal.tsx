@@ -8,16 +8,16 @@ import Modal from "../../Modal";
 import Input from "../../inputs/input";
 import Select from "../../inputs/select";
 import Button from "../../buttons/Button";
-import { useGroupModalStore } from "@/hooks/useModalStore";
 
 type Props = {
   users: User[];
+  isOpen?: boolean;
+  onClose: () => void;
 };
 
 const GroupChatModal = (props: Props) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const { isOpen, onClose } = useGroupModalStore();
 
   const {
     register,
@@ -38,13 +38,13 @@ const GroupChatModal = (props: Props) => {
       .post("/api/chats", { ...data, isGroup: true })
       .then(() => {
         router.refresh();
-        onClose();
+        props.onClose();
       })
       .catch(() => toast.error("Something went wrong..."))
       .finally(() => setIsLoading(false));
   };
   return (
-    <Modal onClose={onClose} isOpen={isOpen}>
+    <Modal onClose={props.onClose} isOpen={props.isOpen}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-12">
           <div className="border-b border-dark/30 pb-12">
@@ -79,7 +79,7 @@ const GroupChatModal = (props: Props) => {
         <div className="mt-6 flex items-center justify-end gap-x-6">
           <Button
             disabled={isLoading}
-            onClick={onClose}
+            onClick={props.onClose}
             type="button"
             secondary
           >
