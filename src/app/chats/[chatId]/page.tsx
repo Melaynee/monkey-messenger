@@ -16,9 +16,9 @@ const ChatPage = async ({ params }: { params: IParams }) => {
   const messages = await getMessages(params.chatId);
   const currentUser = await getCurrentUser();
 
-  if (!chat) {
+  if (!chat || !chat.users.some((user) => user.id === currentUser?.id)) {
     return (
-      <div className="lg:pl-80 h-full">
+      <div className=" h-full">
         <div className="h-full flex flex-col">
           <EmpyState />
         </div>

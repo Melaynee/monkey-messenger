@@ -60,8 +60,10 @@ export async function POST(
       },
     });
 
-    updatedChat.users.forEach((user) => {
-      pusherServer.trigger(user.email!, "chat:update", { id: chatId });
+    chat.users.forEach((user) => {
+      if (user.id === userId)
+        pusherServer.trigger(user.email!, "chat:remove", updatedChat);
+      pusherServer.trigger(user.email!, "chat:update", updatedChat);
     });
 
     return NextResponse.json(updatedChat);

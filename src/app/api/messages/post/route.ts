@@ -14,6 +14,14 @@ export async function POST(request: Request) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
+    const chat = await prisma.chat.findUnique({
+      where: { id: chatId },
+      include: { users: true },
+    });
+    if (!chat || !chat.users.some((user) => user.id === currentUser.id)) {
+      return new NextResponse("Forbidden", { status: 403 });
+    }
+
     const newMessage = await prisma.message.create({
       data: {
         body: message,
