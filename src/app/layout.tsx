@@ -3,8 +3,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import ToasterContext from "@/context/ToasterContext";
 import AuthContext from "@/context/AuthContext";
-import ActiveStatus from "@/components/ActiveStatus";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
+import ActiveStatus from "@/components/users/ActiveStatus";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],

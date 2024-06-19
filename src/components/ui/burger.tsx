@@ -11,10 +11,10 @@ import {
 import useRoutes from "@/hooks/useRoutes";
 import Link from "next/link";
 import { User } from "@prisma/client";
-import AvatarComponent from "./Avatar";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useSettingsModalStore } from "@/hooks/useModalStore";
+import AvatarComponent from "../users/Avatar";
 
 type Props = { currentUser: User };
 
