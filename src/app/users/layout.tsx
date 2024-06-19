@@ -1,5 +1,6 @@
 import getCurrentUser from "@/actions/getCurrentUser";
 import getUsers from "@/actions/getUsers";
+import Loader from "@/components/Loader";
 import UserList from "@/components/UserList";
 import Sidebar from "@/components/organisms/sidebar";
 import SettingsModal from "@/components/settings/SettingsModal";
@@ -29,7 +30,7 @@ export default async function UsersLayout({
               defaultSize={25}
               maxSize={50}
             >
-              <Suspense fallback={null}>
+              <Suspense fallback={<Loader />}>
                 <Sidebar currentUser={currentUser!}>
                   <UserList users={users} />
                 </Sidebar>

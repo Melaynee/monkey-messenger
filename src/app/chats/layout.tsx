@@ -1,6 +1,7 @@
 import getChats from "@/actions/getChats";
 import getCurrentUser from "@/actions/getCurrentUser";
 import getUsers from "@/actions/getUsers";
+import Loader from "@/components/Loader";
 import ChatList from "@/components/chat/organisms/ChatList";
 import Sidebar from "@/components/organisms/sidebar";
 import SettingsModal from "@/components/settings/SettingsModal";
@@ -31,7 +32,7 @@ const ChatsLayout: React.FC<Props> = async ({ children }) => {
               maxSize={50}
               className="hidden lg:block"
             >
-              <Suspense fallback={null}>
+              <Suspense fallback={<Loader />}>
                 <Sidebar currentUser={currentUser!}>
                   <ChatList initialItems={chats} users={users} />
                 </Sidebar>
