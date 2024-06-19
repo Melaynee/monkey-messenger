@@ -53,9 +53,7 @@ export async function POST(
       console.log(userId, chatId);
       return new NextResponse("User is not in this chat", { status: 404 });
     }
-    if (isUserInChat.id === currentUser.id) {
-      return new NextResponse("You cannot kick yourself", { status: 400 });
-    }
+
     const updatedChat = await prisma.chat.update({
       where: {
         id: chatId,

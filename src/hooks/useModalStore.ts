@@ -42,6 +42,12 @@ export const useAddUserToGroupModalStore = create<ModalStore>((set) => ({
   onClose: () => set({ isOpen: false }),
 }));
 
+export const useLeavingModalStore = create<ModalStore>((set) => ({
+  isOpen: false,
+  onOpen: () => set({ isOpen: true }),
+  onClose: () => set({ isOpen: false }),
+}));
+
 export const useDeleteChatModalStore = create<ModalStore>((set) => ({
   isOpen: false,
   onOpen: () => set({ isOpen: true }),

@@ -4,7 +4,7 @@ import AvatarComponent from "../../Avatar";
 import UserItem from "../../UserItem";
 import ChatDropdownMenu from "../ChatDropdownMenu";
 import useOtherUser from "@/hooks/useOtherUser";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { BiChevronLeft } from "react-icons/bi";
 import ProfileDrawer from "../ProfileDrawer/ProfileDrawer";
 import AddContact from "../AddContact";
@@ -12,6 +12,10 @@ import { useRouter } from "next/navigation";
 import AvatarGroup from "../GroupChat/AvatarGroup";
 import useActiveList from "@/hooks/useActiveList";
 import AddUserToGroupModal from "../GroupChat/AddUserToGroupModal";
+import LeaveChatModal from "../LeaveChatModal";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useLeavingModalStore } from "@/hooks/useModalStore";
 
 interface Props {
   chat: Chat & {
@@ -23,6 +27,7 @@ interface Props {
 const Header = (props: Props) => {
   const otherUser = useOtherUser(props.chat);
   const [isDrawOpen, setIsDrawOpen] = useState(false);
+  const { onClose: onLeavingClose } = useLeavingModalStore();
 
   const { members } = useActiveList();
 
@@ -43,9 +48,26 @@ const Header = (props: Props) => {
     router.push("/chats");
   };
 
+  const onLeave = useCallback(() => {
+    axios
+      .post(`/api/chats/${props.chat.id}/kick`, {
+        userId: props.currentUser?.id,
+      })
+      .then(() => {
+        router.push("/chats");
+        router.refresh();
+      })
+      .catch(() => toast.error("Something went wrong..."))
+      .finally(() => {
+        onLeavingClose();
+      });
+  }, [props.chat.id, router, onLeavingClose, props.currentUser?.id]);
+
   return (
     <>
       <AddUserToGroupModal />
+      <LeaveChatModal handleClick={onLeave} />
+
       <AddContact data={otherUser} />
       <ProfileDrawer
         isOpen={isDrawOpen}

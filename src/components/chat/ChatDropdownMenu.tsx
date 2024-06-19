@@ -20,7 +20,9 @@ import RemoveChatModal from "./RemoveChatModal";
 import {
   useAddContactModalStore,
   useDeleteChatModalStore,
+  useLeavingModalStore,
 } from "@/hooks/useModalStore";
+import Loader from "../Loader";
 
 type Props = {
   isGroup?: boolean;
@@ -30,6 +32,7 @@ const ChatDropdownMenu = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { onOpen, onClose } = useDeleteChatModalStore();
+  const { onOpen: onLeavingOpen } = useLeavingModalStore();
   const onContactsOpen = useAddContactModalStore().onOpen;
 
   const { chatId } = useChat();
@@ -47,6 +50,8 @@ const ChatDropdownMenu = (props: Props) => {
         setIsLoading(false);
       });
   }, [chatId, router, onClose]);
+
+  if (isLoading) return <Loader />;
 
   return (
     <>
@@ -77,7 +82,10 @@ const ChatDropdownMenu = (props: Props) => {
             <BiSelectMultiple size={20} />
             Select messages{" "}
           </DropdownMenuItem>
-          <DropdownMenuItem className="flex gap-2 cursor-pointer">
+          <DropdownMenuItem
+            className="flex gap-2 cursor-pointer"
+            onClick={onLeavingOpen}
+          >
             <MdBlock size={20} />
             {!props.isGroup ? "Block user" : "Block group"}
           </DropdownMenuItem>

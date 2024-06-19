@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import UserBox from "@/components/UserBox";
 import { IoClose } from "react-icons/io5";
 import { useDeleteChatModalStore } from "@/hooks/useModalStore";
+import Loader from "@/components/Loader";
 
 type Props = {
   user: User;
@@ -46,6 +47,8 @@ const ProfileDrawerInfo = (props: Props) => {
     }
   };
 
+  if (isLoading) return <Loader />;
+
   return (
     <div className="flex flex-col h-full w-full">
       {!props.isGroup && (
@@ -70,7 +73,10 @@ const ProfileDrawerInfo = (props: Props) => {
       {props.isGroup &&
         props.users.map((user) => (
           <div key={user.id} className="flex items-center hover:bg-light">
-            <UserBox user={user} />
+            <UserBox
+              user={user}
+              handleClick={() => toast.success("Well... Nothing happened!")}
+            />
             {props.owner === props.currentUser?.id &&
               user.id !== props.currentUser?.id && (
                 <div
@@ -84,14 +90,16 @@ const ProfileDrawerInfo = (props: Props) => {
           </div>
         ))}
 
-      <div className="mt-auto py-4">
-        <Button type="button" onClick={onDeleteModal} danger fullWidth>
-          <div className="flex items-center justify-center gap-3 ">
-            <MdDeleteOutline size={32} className="" />
-            Delete Chat
-          </div>
-        </Button>
-      </div>
+      {props.owner === props.currentUser?.id && (
+        <div className="mt-auto py-4">
+          <Button type="button" onClick={onDeleteModal} danger fullWidth>
+            <div className="flex items-center justify-center gap-3 ">
+              <MdDeleteOutline size={32} className="" />
+              Delete Chat
+            </div>
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
