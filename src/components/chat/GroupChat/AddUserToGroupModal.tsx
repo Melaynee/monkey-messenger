@@ -1,8 +1,9 @@
-import getUsers from "@/actions/getUsers";
 import Modal from "@/components/Modal";
 import Button from "@/components/buttons/Button";
 import Select from "@/components/inputs/select";
+import { useChatUsers } from "@/hooks/useChatUsers";
 import useChat from "@/hooks/useChats";
+import { useUsers } from "@/hooks/useGetUsers";
 import { useAddUserToGroupModalStore } from "@/hooks/useModalStore";
 import { User } from "@prisma/client";
 import axios from "axios";
@@ -16,9 +17,12 @@ type Props = {};
 const AddUserToGroupModal = (props: Props) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [users, setUsers] = useState<User[] | []>([]);
   const { chatId } = useChat();
   const { isOpen, onClose } = useAddUserToGroupModalStore();
+
+  const { data: users, isSuccess: isSuccessUsers } = useUsers();
+  const { data: chatUsers, isSuccess: isSuccessChatUsers } =
+    useChatUsers(chatId);
 
   const {
     handleSubmit,
@@ -28,6 +32,11 @@ const AddUserToGroupModal = (props: Props) => {
   } = useForm<FieldValues>({
     defaultValues: { name: "", members: [] },
   });
+
+  const filteredUsers =
+    users?.filter((user: User) => {
+      return !chatUsers?.some((cu: User) => cu.id === user.id);
+    }) || [];
 
   const members = watch("members");
 
@@ -46,40 +55,44 @@ const AddUserToGroupModal = (props: Props) => {
 
   return (
     <Modal onClose={onClose} isOpen={isOpen}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="space-y-12">
-          <div className="border-b border-dark/30 pb-12">
-            <h2 className="font-semibold text-dark">Add user to your chat</h2>
-            <div className="mt-10 flex flex-col gap-y-8">
-              <Select
-                disabled={isLoading}
-                label="Members"
-                options={users.map((user) => ({
-                  value: user.id,
-                  label: user.name,
-                }))}
-                onChange={(value: any) =>
-                  setValue("members", value, { shouldValidate: true })
-                }
-                value={members}
-              />
+      {isSuccessUsers && isSuccessChatUsers && (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="space-y-12">
+            <div className="border-b border-dark/30 pb-12">
+              <h2 className="font-semibold text-dark">Add user to your chat</h2>
+              <div className="mt-10 flex flex-col gap-y-8">
+                <Select
+                  disabled={isLoading}
+                  label="Members"
+                  options={
+                    filteredUsers.map((user: User) => ({
+                      value: user.id,
+                      label: user.name,
+                    })) || []
+                  }
+                  onChange={(value: any) =>
+                    setValue("members", value, { shouldValidate: true })
+                  }
+                  value={members}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="mt-6 flex items-center justify-end gap-x-6">
-          <Button
-            disabled={isLoading}
-            onClick={onClose}
-            type="button"
-            secondary
-          >
-            Cancel
-          </Button>
-          <Button disabled={isLoading} type="submit">
-            Add
-          </Button>
-        </div>
-      </form>
+          <div className="mt-6 flex items-center justify-end gap-x-6">
+            <Button
+              disabled={isLoading}
+              onClick={onClose}
+              type="button"
+              secondary
+            >
+              Cancel
+            </Button>
+            <Button disabled={isLoading} type="submit">
+              Add
+            </Button>
+          </div>
+        </form>
+      )}
     </Modal>
   );
 };
