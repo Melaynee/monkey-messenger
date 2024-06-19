@@ -29,6 +29,14 @@ export async function POST(
       return new NextResponse("Invalid chat ID", { status: 400 });
     }
     if (chat.users.length <= 2) {
+      await prisma.message.updateMany({
+        where: {
+          chatId: chatId,
+        },
+        data: {
+          replyToId: null,
+        },
+      });
       const deletedChat = await prisma.chat.deleteMany({
         where: { id: chatId, userIds: { hasSome: [currentUser.id] } },
       });

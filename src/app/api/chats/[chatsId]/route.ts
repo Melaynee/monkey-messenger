@@ -33,6 +33,7 @@ export async function DELETE(
         messages: {
           select: {
             id: true,
+            replyTo: true,
           },
         },
         users: {
@@ -49,7 +50,16 @@ export async function DELETE(
       return new NextResponse("Invalid ID", { status: 400 });
     }
 
-    const deletedChat = await prisma.chat.deleteMany({
+    await prisma.message.updateMany({
+      where: {
+        chatId: chatId,
+      },
+      data: {
+        replyToId: null,
+      },
+    });
+
+    const deletedChat = await prisma.chat.delete({
       where: {
         id: chatId,
         userIds: {
