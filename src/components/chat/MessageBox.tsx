@@ -19,6 +19,7 @@ import toast from "react-hot-toast";
 import useReplyStore from "@/hooks/useReplyStore";
 import useEditStore from "@/hooks/useEditStore";
 import AvatarComponent from "../users/Avatar";
+import Loader from "../Loader";
 
 type Props = {
   isLast?: boolean;
@@ -61,7 +62,7 @@ const MessageBox = (props: Props) => {
     setEditMessage(props.data);
   }, [props.data, setEditMessage, clearReplyMessage]);
 
-  if (props.data.replyTo) console.log(props.data.replyTo);
+  if (isLoading) return <Loader />;
   return (
     <div
       className={cn(
