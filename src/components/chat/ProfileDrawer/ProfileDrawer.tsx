@@ -23,7 +23,7 @@ interface DrawerProps {
 }
 
 const ProfileDrawer: React.FC<DrawerProps> = (props) => {
-  const otherUser: User = useOtherUser(props.data);
+  const otherUser = useOtherUser(props.data);
 
   const joinedDate = useMemo(() => {
     return format(new Date(otherUser.createdAt), "PP");

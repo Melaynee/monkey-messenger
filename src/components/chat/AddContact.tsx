@@ -22,7 +22,7 @@ import ProfileForm from "./ProfileForm";
 import { useAddContactModalStore } from "@/hooks/useModalStore";
 
 type Props = {
-  data: User;
+  data?: User;
 };
 
 const AddContact = (props: Props) => {
@@ -36,11 +36,11 @@ const AddContact = (props: Props) => {
             <DialogTitle className="text-hover">Add contact</DialogTitle>
             <DialogDescription>
               Email will be <span className="font-semibold">visible</span> once{" "}
-              <span className="font-semibold italic">{props.data.name}</span>{" "}
+              <span className="font-semibold italic">{props.data?.name}</span>{" "}
               adds you as a contact.
             </DialogDescription>
           </DialogHeader>
-          <ProfileForm user={props.data} />
+          <ProfileForm user={props.data!} />
         </DialogContent>
       </Dialog>
     );
@@ -53,11 +53,11 @@ const AddContact = (props: Props) => {
           <DrawerTitle className="text-hover">Add contact</DrawerTitle>
           <DrawerDescription>
             Email will be <span className="font-semibold">visible</span> once{" "}
-            <span className="font-semibold italic">{props.data.name}</span> adds
-            you as a contact.
+            <span className="font-semibold italic">{props.data?.name}</span>{" "}
+            adds you as a contact.
           </DrawerDescription>
         </DrawerHeader>
-        <ProfileForm user={props.data} className="px-4" />
+        <ProfileForm user={props.data!} className="px-4" />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button type="button" fullWidth onClick={onClose}>

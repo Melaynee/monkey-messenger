@@ -9,9 +9,8 @@ const useOtherUser = (chat: FullChatType | { users: User[] }) => {
   const otherUser = useMemo(() => {
     const currentUserEmail = session.data?.user?.email;
 
-    const otherUser = chat.users.filter(
-      (user) => user.email !== currentUserEmail
-    );
+    const otherUser =
+      chat.users!.filter((user) => user.email !== currentUserEmail) || [];
 
     return otherUser[0];
   }, [session?.data?.user?.email, chat.users]);
