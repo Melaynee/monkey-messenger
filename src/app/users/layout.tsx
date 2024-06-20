@@ -1,7 +1,6 @@
 import getCurrentUser from "@/actions/getCurrentUser";
 import getUsers from "@/actions/getUsers";
 import Loader from "@/components/Loader";
-import UserList from "@/components/UserList";
 import Sidebar from "@/components/organisms/sidebar";
 import SettingsModal from "@/components/settings/SettingsModal";
 import {
@@ -9,6 +8,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import UserList from "@/components/users/UserList";
 import { Suspense } from "react";
 
 export default async function UsersLayout({

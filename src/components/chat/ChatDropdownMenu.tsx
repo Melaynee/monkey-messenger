@@ -84,10 +84,10 @@ const ChatDropdownMenu = (props: Props) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             className="flex gap-2 cursor-pointer"
-            onClick={onLeavingOpen}
+            onClick={props.isGroup ? onLeavingOpen : undefined}
           >
             <MdBlock size={20} />
-            {!props.isGroup ? "Block user" : "Block group"}
+            {!props.isGroup ? "Block user" : "Leave group"}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           {!props.isGroup && (
